@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FollowApp y Chat Privacy Shield</title>
-<meta name="description" content="Dos extensiones de Chrome que trabajan dentro de tu navegador: sin contraseña, sin cuenta y sin servidores.">
+<title>FollowApp, Chat Privacy Shield y Best CV</title>
+<meta name="description" content="Dos extensiones de Chrome y una web para mejorar tu CV con IA: sin contraseña, sin cuenta y sin guardar tus datos.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -116,6 +116,7 @@
   }
   .app.followapp { --tono: var(--accent); }
   .app.shield { --tono: var(--ok); }
+  .app.cv { --tono: #E9B35A; }
 
   .donde {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
@@ -168,7 +169,7 @@
   <header>
     <div class="who">
       <h1>arturdev98</h1>
-      <p data-es="extensiones de Chrome" data-en="Chrome extensions">extensiones de Chrome</p>
+      <p data-es="extensiones de Chrome y apps web" data-en="Chrome extensions and web apps">extensiones de Chrome y apps web</p>
     </div>
     <div class="langs">
       <button type="button" id="b-es" class="on">ES</button>
@@ -177,19 +178,19 @@
   </header>
 
   <section class="hero">
-    <h2 data-es="Dos extensiones que no te piden nada" data-en="Two extensions that ask you for nothing">Dos extensiones que no te piden nada</h2>
-    <p data-es="Ni contraseña, ni cuenta, ni un servidor al que mandar tus datos. Las dos trabajan dentro de tu navegador, y ahí se quedan." data-en="No password, no account, no server to send your data to. Both work inside your browser, and that is where they stay.">Ni contraseña, ni cuenta, ni un servidor al que mandar tus datos. Las dos trabajan dentro de tu navegador, y ahí se quedan.</p>
+    <h2 data-es="Herramientas pequeñas que no te piden nada" data-en="Small tools that ask you for nothing">Herramientas pequeñas que no te piden nada</h2>
+    <p data-es="Ni contraseña ni cuenta. Las extensiones trabajan dentro de tu navegador y tus datos se quedan ahí; la web de CVs procesa el tuyo y no lo guarda." data-en="No password, no account. The extensions work inside your browser and your data stays there; the CV site processes yours and does not keep it.">Ni contraseña ni cuenta. Las extensiones trabajan dentro de tu navegador y tus datos se quedan ahí; la web de CVs procesa el tuyo y no lo guarda.</p>
     <ul class="sin">
       <li data-es="sin contraseña" data-en="no password">sin contraseña</li>
       <li data-es="sin cuenta" data-en="no account">sin cuenta</li>
-      <li data-es="sin servidores" data-en="no servers">sin servidores</li>
+      <li data-es="sin guardar tus datos" data-en="nothing stored">sin guardar tus datos</li>
       <li data-es="sin analítica" data-en="no analytics">sin analítica</li>
     </ul>
   </section>
 
   <section class="movil" id="movil" hidden>
     <strong data-es="Estás en el móvil" data-en="You are on a phone">Estás en el móvil</strong>
-    <p data-es="Las extensiones de Chrome solo se instalan en un ordenador. Guárdate este enlace y ábrelo cuando estés delante de uno." data-en="Chrome extensions can only be installed on a computer. Save this link and open it when you are at one.">Las extensiones de Chrome solo se instalan en un ordenador. Guárdate este enlace y ábrelo cuando estés delante de uno.</p>
+    <p data-es="Las extensiones de Chrome solo se instalan en un ordenador. Guárdate este enlace y ábrelo cuando estés delante de uno. Best CV sí funciona desde el móvil." data-en="Chrome extensions can only be installed on a computer. Save this link and open it when you are at one. Best CV does work on your phone.">Las extensiones de Chrome solo se instalan en un ordenador. Guárdate este enlace y ábrelo cuando estés delante de uno. Best CV sí funciona desde el móvil.</p>
     <div class="acciones">
       <button type="button" id="compartir" hidden data-es="Compartir" data-en="Share">Compartir</button>
       <button type="button" id="copiar" data-es="Copiar enlace" data-en="Copy link">Copiar enlace</button>
@@ -235,10 +236,27 @@
       </div>
     </article>
 
+    <article class="app cv">
+      <p class="donde" data-es="Web · con IA" data-en="Web · AI-powered">Web · con IA</p>
+      <h3 data-es="Tu CV, reescrito sin inventar nada" data-en="Your CV, rewritten without making anything up">Tu CV, reescrito sin inventar nada</h3>
+      <p class="nombre">Best CV</p>
+      <p class="que" data-es="Subes tu CV, dices qué quieres destacar o pegas la vacante, y la IA lo reescribe y le da un diseño nuevo. Si le faltan datos para un logro, te pregunta en vez de inventarlo." data-en="Upload your CV, say what you want to highlight or paste the job posting, and the AI rewrites it with a fresh design. If an achievement is missing details, it asks you instead of making them up.">Subes tu CV, dices qué quieres destacar o pegas la vacante, y la IA lo reescribe y le da un diseño nuevo. Si le faltan datos para un logro, te pregunta en vez de inventarlo.</p>
+      <ul>
+        <li data-es="Reescribe tus logros y los ordena por impacto" data-en="Rewrites your achievements and orders them by impact">Reescribe tus logros y los ordena por impacto</li>
+        <li data-es="Lo adapta a una vacante y te dice qué requisitos te faltan" data-en="Tailors it to a job posting and tells you which requirements are missing">Lo adapta a una vacante y te dice qué requisitos te faltan</li>
+        <li data-es="Roast de tu CV: puntaje honesto, chistes y un arreglo serio para cada uno" data-en="CV roast: an honest score, jokes and a serious fix for each one">Roast de tu CV: puntaje honesto, chistes y un arreglo serio para cada uno</li>
+        <li data-es="Editor con colores, foto y descarga en PDF" data-en="Editor with colors, photo and PDF download">Editor con colores, foto y descarga en PDF</li>
+        <li data-es="No guarda tu CV: el resultado queda en tu navegador" data-en="Does not keep your CV: the result stays in your browser">No guarda tu CV: el resultado queda en tu navegador</li>
+      </ul>
+      <div class="pie-app">
+        <a class="cta" href="https://best-cv-neon.vercel.app" data-es="Abrir Best CV" data-en="Open Best CV">Abrir Best CV</a>
+      </div>
+    </article>
+
   </div>
 
   <footer>
-    <p data-es="Ninguna de las dos está afiliada a Instagram, WhatsApp, Meta ni Google." data-en="Neither one is affiliated with Instagram, WhatsApp, Meta or Google.">Ninguna de las dos está afiliada a Instagram, WhatsApp, Meta ni Google.</p>
+    <p data-es="Ninguna está afiliada a Instagram, WhatsApp, Meta, Google ni Anthropic." data-en="None of them is affiliated with Instagram, WhatsApp, Meta, Google or Anthropic.">Ninguna está afiliada a Instagram, WhatsApp, Meta, Google ni Anthropic.</p>
     <p>github.com/arturdev98</p>
   </footer>
 
