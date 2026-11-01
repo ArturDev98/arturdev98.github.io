@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="es" data-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arturo Isaza · QA Automation Engineer</title>
+<meta name="description" content="CV de Neiver Arturo Isaza Codezo, QA Automation Engineer / SDET: automatización, corrección de código en producción y herramientas con IA, con resultados medidos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --rail: #0E161C;
+    --rail-ink: #E8EFF3;
+    --rail-soft: #B9CAD4;
+    --rail-mut: #8A9EAA;
+    --rail-rule: #24333C;
+    --cyan: #4FC7D1;
+    --paper: #F7F9FA;
+    --ink: #0E161C;
+    --soft: #42525C;
+    --mut: #5F717B;
+    --rule: #D6DFE4;
+    --teal: #0F7480;
+    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --body: 'Source Serif 4', Georgia, serif;
+    --mono: 'JetBrains Mono', Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--paper); }
+  body {
+    margin: 0; color: var(--ink); background: var(--paper);
+    font-family: var(--body); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; caret-color: var(--teal);
+    font-variant-numeric: tabular-nums;
+  }
+  ::selection { background: #BFE9ED; color: var(--ink); }
+  a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 3px; }
+  .rail :focus-visible { outline-color: var(--cyan); }
+  html { scrollbar-color: #B7C5CD var(--paper); }
+
+  /* Solo se ve el idioma activo; los dos viven en el HTML para que el PDF no dependa de JS. */
+  html[data-lang="es"] [data-l="en"], html[data-lang="en"] [data-l="es"] { display: none !important; }
+
+  /* ---------------- estructura ---------------- */
+
+  .cv { display: grid; grid-template-columns: 340px minmax(0, 1fr); min-height: 100vh; }
+  .franja, .rail { background: var(--rail); color: var(--rail-ink); }
+  .ident { padding: 56px 40px 0; }
+  .datos { padding: 0 40px; }
+  .herr { padding: 0 40px 56px; }
+  main { padding: 40px 72px 64px 64px; }
+  main > * { max-width: 980px; }
+
+  /* ---------------- franja ---------------- */
+
+  .foto {
+    display: block; width: 116px; height: 116px; border-radius: 50%;
+    margin-bottom: 26px; box-shadow: 0 0 0 3px var(--rail), 0 0 0 5px var(--cyan);
+  }
+  .ident h1 {
+    font-family: var(--display); font-weight: 800; font-size: 34px;
+    line-height: 1.06; letter-spacing: -0.02em; margin: 0; text-wrap: balance;
+  }
+  .rol { font-family: var(--display); font-weight: 600; font-size: 16px; color: var(--cyan); margin: 12px 0 0; }
+
+  .rail h2 {
+    font-family: var(--display); font-weight: 600; font-size: 12.5px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--rail-mut);
+    margin: 30px 0 10px; padding-top: 18px; border-top: 1px solid var(--rail-rule);
+  }
+  .contacto { list-style: none; margin: 0; padding: 0; font-family: var(--mono); font-size: 13px; line-height: 1.95; color: var(--rail-soft); }
+  .contacto a { text-decoration: none; }
+  .contacto a:hover { color: var(--cyan); text-decoration: underline; }
+  .rail p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--rail-soft); }
+  .rail p strong { color: var(--rail-ink); font-weight: 600; }
+
+  .grupos { list-style: none; margin: 0; padding: 0; }
+  .grupos li { padding: 9px 0; font-size: 14.5px; line-height: 1.5; color: var(--rail-soft); }
+  .grupos li + li { border-top: 1px solid var(--rail-rule); }
+  .grupos b { display: block; font-family: var(--display); font-weight: 600; font-size: 13.5px; color: var(--rail-ink); margin-bottom: 2px; }
+
+  /* ---------------- columna principal ---------------- */
+
+  .barra { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+  .langs { display: flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .langs button, .pdf {
+    font-family: var(--display); font-size: 13px; font-weight: 600; cursor: pointer;
+    background: none; border: 0; color: var(--mut); padding: 7px 13px;
+  }
+  .langs button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+  .langs button:not([aria-pressed="true"]):hover { color: var(--ink); }
+  .pdf { border: 1px solid var(--rule); border-radius: 6px; color: var(--ink); }
+  .pdf:hover { border-color: var(--teal); color: var(--teal); }
+
+  .tesis {
+    font-family: var(--display); font-weight: 700; font-size: clamp(30px, 3.4vw, 42px);
+    line-height: 1.1; letter-spacing: -0.025em; margin: 34px 0 16px; max-width: 19em; text-wrap: balance;
+  }
+  .resumen { font-size: 18px; color: var(--soft); margin: 0; max-width: 64ch; }
+
+  .cifras {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 24px;
+    margin: 34px 0 8px; padding: 0; list-style: none;
+    border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule);
+  }
+  .cifras li { padding: 16px 0 18px; }
+  .cifras b {
+    display: block; font-family: var(--display); font-weight: 800; font-size: 34px;
+    letter-spacing: -0.03em; line-height: 1.1; white-space: nowrap;
+  }
+  .cifras b small { font-size: 0.55em; font-weight: 700; letter-spacing: 0; }
+  .cifras span { display: block; font-size: 14.5px; line-height: 1.4; color: var(--soft); margin-top: 6px; }
+
+  main > section { margin-top: 44px; }
+  main h2 {
+    font-family: var(--display); font-weight: 700; font-size: 23px; letter-spacing: -0.015em;
+    margin: 0 0 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule);
+  }
+
+  .empleo + .empleo { margin-top: 32px; }
+  .cab { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .cab h3 { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin: 0; }
+  .fecha { font-family: var(--mono); font-size: 13px; color: var(--mut); white-space: nowrap; }
+  .donde { margin: 2px 0 0; color: var(--soft); font-size: 16px; }
+
+  .empleo h4 {
+    font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--teal);
+    margin: 22px 0 6px;
+  }
+  .logros { list-style: none; margin: 10px 0 0; padding: 0; max-width: 68ch; }
+  /* Guion como fondo y no como ::before posicionado: así el PDF conserva el orden de lectura. */
+  .logros li { padding: 5px 0 5px 20px; background: linear-gradient(var(--teal), var(--teal)) no-repeat 0 17px / 8px 2px; }
+  .logros b { font-family: var(--display); font-weight: 700; font-size: 0.94em; }
+
+  .proyectos { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 46em; }
+  .proyectos li { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 16px; align-items: baseline; }
+  .proyectos a { font-family: var(--display); font-weight: 700; font-size: 16.5px; text-decoration: none; }
+  .proyectos a:hover { color: var(--teal); text-decoration: underline; }
+  .proyectos small { display: block; font-family: var(--mono); font-size: 12px; color: var(--mut); }
+
+  .pie { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 14.5px; color: var(--mut); }
+  .pie p { margin: 0; }
+
+  /* ---------------- móvil ---------------- */
+
+  @media screen and (max-width: 900px) {
+    .cv { grid-template-columns: minmax(0, 1fr); }
+    .franja { display: contents; }
+    .ident {
+      order: 1; padding: 22px 16px; display: grid; grid-template-columns: 64px minmax(0, 1fr);
+      gap: 0 16px; align-items: center;
+    }
+    .ident .foto { grid-row: span 2; width: 64px; height: 64px; margin: 0; }
+    .ident h1 { font-size: 24px; }
+    .rol { margin-top: 4px; font-size: 14.5px; }
+    main { order: 2; padding: 20px 16px 8px; }
+    .datos { order: 3; padding: 8px 16px 0; }
+    .herr { order: 4; padding: 0 16px 40px; }
+    .barra { justify-content: flex-start; }
+    .tesis { margin-top: 22px; font-size: 28px; }
+    .cifras { margin-top: 24px; }
+    .resumen { font-size: 17px; }
+    .cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cifras li:nth-child(n+3) { border-top: 1px solid var(--rule); }
+    .cifras b { font-size: 28px; }
+    .proyectos li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  }
+
+  /* ---------------- impresión (A4, PDF) ---------------- */
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    html, body { background: #fff; font-size: 10.4pt; line-height: 1.45; }
+    /* La franja ocupa justo la primera hoja; la segunda queda en blanco a la izquierda. */
+    .franja { align-self: start; min-height: 297mm; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .cv { grid-template-columns: 62mm minmax(0, 1fr); max-width: none; min-height: 0; }
+    .ident { padding: 14mm 7mm 0 8mm; }
+    .datos { padding: 0 7mm 0 8mm; }
+    .herr { padding: 0 7mm 8mm 8mm; }
+    /* Sin márgenes de página: clone repite el relleno arriba y abajo en cada hoja. */
+    main { padding: 12mm 11mm 10mm 9mm; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+    h1, h2, h3, h4, .tesis, .cifras b, .rol { letter-spacing: 0 !important; word-spacing: 0.04em; }
+    .barra, .solo-web { display: none !important; }
+    .foto { width: 26mm; height: 26mm; margin-bottom: 6mm; }
+    .ident h1 { font-size: 19pt; }
+    .rol { font-size: 10.5pt; margin-top: 2.5mm; }
+    .rail h2 { font-size: 7.6pt; margin: 5mm 0 2mm; padding-top: 3.5mm; }
+    .contacto { font-size: 7.8pt; line-height: 1.8; }
+    .rail p, .grupos li { font-size: 8.6pt; }
+    .grupos li { padding: 1.6mm 0; }
+    .grupos b { font-size: 8.2pt; }
+    .tesis { font-size: 19pt; margin: 0 0 3mm; }
+    .resumen { font-size: 10.4pt; max-width: none; }
+    .cifras { margin: 6mm 0 0; gap: 0 4mm; }
+    .cifras li { padding: 3mm 0 3.5mm; }
+    .cifras b { font-size: 16pt; }
+    .cifras span { font-size: 8.4pt; margin-top: 1mm; }
+    main > section { margin-top: 7mm; }
+    main h2 { font-size: 12.5pt; margin-bottom: 3mm; padding-bottom: 1.6mm; }
+    .cab h3 { font-size: 11.5pt; }
+    .fecha { font-size: 8pt; }
+    .donde { font-size: 9.6pt; }
+    .empleo + .empleo { margin-top: 5mm; }
+    .empleo h4 { font-size: 9.6pt; margin: 3.5mm 0 0.5mm; }
+    .logros { margin-top: 1.5mm; max-width: none; }
+    .logros li { padding: 0.8mm 0 0.8mm 4mm; }
+    .logros li { background-position: 0 2.75mm; background-size: 2mm 2px; }
+    .cab, .donde, .empleo h4, main h2 { break-after: avoid; }
+    .proyectos li, .logros li { break-inside: avoid; }
+    .proyectos { max-width: none; gap: 2mm; }
+    .proyectos a { font-size: 10pt; }
+    .proyectos small { font-size: 7.6pt; }
+    .pie { margin-top: 7mm; padding-top: 3mm; font-size: 8.6pt; }
+    a { text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="cv">
+
+  <div class="franja">
+  <header class="rail ident">
+    <img class="foto" src="foto.webp" width="116" height="116" alt="Foto de Arturo Isaza" data-alt-en="Photo of Arturo Isaza">
+    <h1>Neiver Arturo Isaza Codezo</h1>
+    <p class="rol">QA Automation Engineer · SDET</p>
+  </header>
+
+  <section class="rail datos">
+    <h2><span data-l="es">Contacto</span><span data-l="en">Contact</span></h2>
+    <ul class="contacto">
+      <li><a href="mailto:testpbr9@gmail.com">testpbr9@gmail.com</a></li>
+      <li>Bucaramanga, Colombia</li>
+      <li><a href="https://www.linkedin.com/in/arturo-isaza-qa">linkedin.com/in/arturo-isaza-qa</a></li>
+      <li><a href="https://github.com/arturdev98">github.com/arturdev98</a></li>
+      <li><a href="https://arturdev98.github.io">arturdev98.github.io</a></li>
+    </ul>
+
+    <h2><span data-l="es">Idiomas</span><span data-l="en">Languages</span></h2>
+    <p data-l="es"><strong>Español</strong> nativo · <strong>Inglés</strong> B1</p>
+    <p data-l="en"><strong>Spanish</strong> native · <strong>English</strong> B1</p>
+
+    <h2><span data-l="es">Estudios</span><span data-l="en">Education</span></h2>
+    <p data-l="es"><strong>Ingeniería de Sistemas</strong><br>CUN, en curso</p>
+    <p data-l="en"><strong>B.Eng. Systems Engineering</strong><br>CUN, in progress</p>
+  </section>
+
+  <aside class="rail herr">
+    <h2><span data-l="es">Herramientas</span><span data-l="en">Toolbox</span></h2>
+    <ul class="grupos">
+      <li><b><span data-l="es">Automatización</span><span data-l="en">Test automation</span></b>Playwright, Selenium, Katalon Studio, Cucumber</li>
+      <li><b><span data-l="es">API, carga y seguridad</span><span data-l="en">API, load and security</span></b>Postman, SOAP UI, JMeter, LoadRunner, OWASP ZAP, Nessus</li>
+      <li><b><span data-l="es">Código</span><span data-l="en">Code</span></b>Java 11 · Spring Boot, TypeScript, Angular, Ionic · Capacitor, Python, SQL Server, Elasticsearch</li>
+      <li><b>CI/CD</b>Jenkins, GitLab CI, Docker, Git</li>
+      <li><b><span data-l="es">IA aplicada</span><span data-l="en">Applied AI</span></b><span data-l="es">Claude Code, agentes y skills, MCP, Claude API</span><span data-l="en">Claude Code, agents and skills, MCP, Claude API</span></li>
+      <li><b><span data-l="es">Gestión</span><span data-l="en">Tracking</span></b>Jira, Azure DevOps, Mantis, SysAid, Taiga · Scrum</li>
+    </ul>
+  </aside>
+  </div>
+
+  <main>
+    <div class="barra">
+      <div class="langs" role="group" aria-label="Idioma / Language">
+        <button type="button" data-set="es" aria-pressed="true">ES</button>
+        <button type="button" data-set="en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="pdf" id="pdf"><span data-l="es">Descargar PDF</span><span data-l="en">Download PDF</span></button>
+    </div>
+
+    <p class="tesis" data-l="es">QA que automatiza, corrige código en producción y mide el resultado</p>
+    <p class="tesis" data-l="en">QA engineer who automates, fixes production code and measures the outcome</p>
+
+    <p class="resumen" data-l="es">Más de 5 años en QA de software web, móvil y de escritorio para fintech y seguros. Desde septiembre de 2025, además de probar, corrijo en código casos de soporte en back, web y móvil, optimizo procesos críticos midiendo antes y después, y construyo herramientas internas y flujos con IA para el equipo.</p>
+    <p class="resumen" data-l="en">5+ years in QA for web, mobile and desktop software in fintech and insurance. Since September 2025, beyond testing, I fix support cases in code across backend, web and mobile, optimize critical processes with before-and-after measurements, and build internal tools and AI workflows for my team.</p>
+
+    <ul class="cifras">
+      <li><b>86</b><span data-l="es">casos de soporte corregidos en código</span><span data-l="en">support cases fixed in code</span></li>
+      <li><b data-l="es">4,9→2,2<small> min</small></b><b data-l="en">4.9→2.2<small> min</small></b><span data-l="es">el guardado de buró más pesado, que chocaba con el corte de 300 s</span><span data-l="en">heaviest credit-bureau save, which was hitting a 300 s timeout</span></li>
+      <li><b data-l="es">2,9×</b><b data-l="en">2.9×</b><span data-l="es">más rápida la reindexación completa de Elasticsearch</span><span data-l="en">faster full Elasticsearch reindex</span></li>
+      <li><b>59–67<small> min</small></b><span data-l="es">de historia de usuario a código probado y commit, con agentes de IA</span><span data-l="en">from user story to tested code and commit, with AI agents</span></li>
+    </ul>
+
+    <section>
+      <h2><span data-l="es">Experiencia</span><span data-l="en">Experience</span></h2>
+
+      <article class="empleo">
+        <div class="cab">
+          <h3><span data-l="es">Analista de Pruebas QA</span><span data-l="en">QA Analyst</span></h3>
+          <span class="fecha"><span data-l="es">may 2023 – hoy</span><span data-l="en">May 2023 – present</span></span>
+        </div>
+        <p class="donde" data-l="es">HexaSolutions · cliente Crezcamos, fintech de microcrédito · Bucaramanga</p>
+        <p class="donde" data-l="en">HexaSolutions · client Crezcamos, a microcredit fintech · Bucaramanga, Colombia</p>
+
+        <h4><span data-l="es">Código y rendimiento</span><span data-l="en">Code and performance</span></h4>
+        <ul class="logros">
+          <li data-l="es">Corregí <b>86 casos de soporte</b> directamente en el código (Java · Spring Boot, Angular y la app móvil Ionic), con <b>378 commits</b> en 16 repositorios entre septiembre de 2025 y octubre de 2026.</li>
+          <li data-l="en">Fixed <b>86 support cases</b> directly in code (Java · Spring Boot, Angular and the Ionic mobile app), with <b>378 commits</b> across 16 repositories between September 2025 and October 2026.</li>
+          <li data-l="es">Optimicé el guardado de pasivos de buró del cliente más grande (informe de 27 MB): de <b>4,9 a 2,2 minutos</b>. Quité 2.551 llamadas REST repetidas, bajé de 64.800 sentencias SQL a unas 230 y llevé un paso de 133 s a 98 ms.</li>
+          <li data-l="en">Optimized the credit-bureau liabilities save for the largest client (a 27 MB report): from <b>4.9 to 2.2 minutes</b>. Removed 2,551 repeated REST calls, cut 64,800 SQL statements to about 230 and took one step from 133 s to 98 ms.</li>
+          <li data-l="es">Paralelicé la reindexación completa de Elasticsearch: <b>2,2× y 2,9× más rápida</b> en los dos sistemas, con los conteos de base de datos e índice cuadrados. En la validación apareció un índice que solo cargaba 43.858 de 263.057 registros.</li>
+          <li data-l="en">Parallelized the full Elasticsearch reindex: <b>2.2× and 2.9× faster</b> in the two systems, with database and index counts matching. Validation also exposed an index that was loading only 43,858 of 263,057 records.</li>
+        </ul>
+
+        <h4><span data-l="es">Producción e incidentes</span><span data-l="en">Production and incidents</span></h4>
+        <ul class="logros">
+          <li data-l="es">Diagnostiqué la caída por memoria de <b>tres servicios en producción</b>: crucé seis logs en una línea de tiempo, separé evidencia de inferencia y ubiqué la causa en el código. Salieron tres correcciones, entre ellas quitar las consultas que cargaban tablas completas.</li>
+          <li data-l="en">Diagnosed the out-of-memory crash of <b>three production services</b>: built a timeline across six logs, kept evidence apart from inference and traced the cause to the code. It led to three fixes, including removing queries that loaded entire tables.</li>
+        </ul>
+
+        <h4><span data-l="es">IA aplicada al desarrollo</span><span data-l="en">AI applied to delivery</span></h4>
+        <ul class="logros">
+          <li data-l="es">Diseñé flujos de agentes con Claude Code que llevan una historia de usuario de punta a punta: análisis, spec, pruebas en rojo, implementación, commit y paquete para QA, en <b>59 a 67 minutos medidos</b>. También generan los scripts SQL de corrección y levantan ambientes locales contra soporte.</li>
+          <li data-l="en">Designed Claude Code agent workflows that take a user story end to end: analysis, spec, failing tests, implementation, commit and a QA hand-off package, in <b>59–67 measured minutes</b>. They also generate data-fix SQL scripts and spin up local environments against staging.</li>
+          <li data-l="es">Construí un <b>agente de triage para la mesa de ayuda</b>: cada 15 minutos lee los tickets de SysAid, los clasifica con Claude, los cruza con los casos abiertos en Mantis y revisa el código antes de publicar el diagnóstico en Google Chat.</li>
+          <li data-l="en">Built a <b>help-desk triage agent</b>: every 15 minutes it reads SysAid tickets, classifies them with Claude, matches them against open Mantis cases and reviews the code before posting a diagnosis to Google Chat.</li>
+        </ul>
+
+        <h4><span data-l="es">Automatización y herramientas</span><span data-l="en">Automation and tooling</span></h4>
+        <ul class="logros">
+          <li data-l="es">Amplié el framework E2E del cliente (Playwright + TypeScript, Page Objects, datos desde Excel, GitLab CI): simulé la biometría FaceTec por escenarios para automatizar los flujos que dependían de ella y conecté los casos UAT a la base de preproducción.</li>
+          <li data-l="en">Extended the client's E2E framework (Playwright + TypeScript, Page Objects, Excel-driven data, GitLab CI): simulated FaceTec biometrics per scenario to automate the flows that depended on it, and wired UAT cases to the pre-production database.</li>
+          <li data-l="es">Desplegué con Jenkins y Docker tres herramientas internas: un bot que avisa en Chat qué imágenes publicó cada build, un buscador web de Elasticsearch (Spring Boot + Angular) y un ranking de calidad del código del equipo a partir de GitLab.</li>
+          <li data-l="en">Shipped three internal tools with Jenkins and Docker: a bot that posts to Chat which images each build published, a web Elasticsearch browser (Spring Boot + Angular) and a team code-quality ranking built from GitLab.</li>
+          <li data-l="es">Planeo y ejecuto pruebas funcionales, de humo, carga y estrés por versión, y presento cada versión al Product Owner antes de liberarla.</li>
+          <li data-l="en">Plan and run functional, smoke, load and stress tests for each release, and walk the Product Owner through every release before it ships.</li>
+        </ul>
+      </article>
+
+      <article class="empleo">
+        <div class="cab">
+          <h3><span data-l="es">Analista de Pruebas QA</span><span data-l="en">QA Analyst</span></h3>
+          <span class="fecha"><span data-l="es">ago 2022 – may 2023</span><span data-l="en">Aug 2022 – May 2023</span></span>
+        </div>
+        <p class="donde">Avances Software</p>
+        <ul class="logros">
+          <li data-l="es">Probé aplicaciones web y de escritorio a partir del análisis de las historias de usuario; reporté defectos, validé sus correcciones y documenté los casos ejecutados.</li>
+          <li data-l="en">Tested web and desktop applications based on user-story analysis; reported defects, verified their fixes and documented the executed cases.</li>
+        </ul>
+      </article>
+
+      <article class="empleo">
+        <div class="cab">
+          <h3><span data-l="es">Analista de Pruebas QA</span><span data-l="en">QA Analyst</span></h3>
+          <span class="fecha"><span data-l="es">jul 2021 – ago 2022</span><span data-l="en">Jul 2021 – Aug 2022</span></span>
+        </div>
+        <p class="donde" data-l="es">SYC Sistemas y Computadores · proyecto SBS Seguros · Floridablanca</p>
+        <p class="donde" data-l="en">SYC Sistemas y Computadores · SBS Seguros (insurance) project · Floridablanca, Colombia</p>
+        <ul class="logros">
+          <li data-l="es">Implementé y mantuve el proceso de QA del proyecto: casos de prueba desde requisitos, pruebas manuales y automatizadas, y seguimiento de incidencias con desarrollo hasta su cierre.</li>
+          <li data-l="en">Set up and ran the project's QA process: test cases from requirements, manual and automated testing, and incident follow-up with development until closure.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section>
+      <h2><span data-l="es">Proyectos propios</span><span data-l="en">Side projects</span></h2>
+      <ul class="proyectos">
+        <li>
+          <span><a href="https://chromewebstore.google.com/detail/nffhilcgedjjoednagidnimjnembkdho">FollowApp</a><small>Chrome Web Store</small></span>
+          <span data-l="es">Extensión que avisa quién te dejó de seguir en Instagram y distingue una cuenta suspendida de alguien que se fue.</span>
+          <span data-l="en">Extension that tells you who unfollowed you on Instagram and tells a suspended account apart from someone who left.</span>
+        </li>
+        <li>
+          <span><a href="https://chromewebstore.google.com/detail/chat-privacy-shield/gillcdhclnchpkbifcnipfckmapodjpm">Chat Privacy Shield</a><small>Chrome Web Store</small></span>
+          <span data-l="es">Extensión que difumina chats, nombres y fotos en WhatsApp Web; disponible en 6 idiomas.</span>
+          <span data-l="en">Extension that blurs chats, names and photos on WhatsApp Web; available in 6 languages.</span>
+        </li>
+        <li>
+          <span><a href="https://best-cv-neon.vercel.app">Best CV</a><small>Next.js · Claude API</small></span>
+          <span data-l="es">Web que reescribe un CV con IA sin inventar datos: si a un logro le falta información, pregunta.</span>
+          <span data-l="en">Web app that rewrites a CV with AI without making anything up: if an achievement lacks detail, it asks.</span>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="pie">
+      <p data-l="es">Referencias disponibles a solicitud.<span class="solo-web"> · Versión web: arturdev98.github.io/cv</span></p>
+      <p data-l="en">References available on request.<span class="solo-web"> · Web version: arturdev98.github.io/cv</span></p>
+    </footer>
+  </main>
+
+</div>
+
+<script>
+  var TITULOS = {
+    es: 'Arturo Isaza · QA Automation Engineer',
+    en: 'Arturo Isaza · QA Automation Engineer'
+  };
+  var ARCHIVO = { es: 'CV-Arturo-Isaza-QA-Automation-ES', en: 'CV-Arturo-Isaza-QA-Automation-EN' };
+  var raiz = document.documentElement;
+  var foto = document.querySelector('.foto');
+  var altEs = foto.alt;
+
+  function pintar(l) {
+    raiz.lang = l;
+    raiz.setAttribute('data-lang', l);
+    document.title = TITULOS[l];
+    foto.alt = l === 'en' ? foto.getAttribute('data-alt-en') : altEs;
+    var b = document.querySelectorAll('[data-set]');
+    for (var i = 0; i < b.length; i++) b[i].setAttribute('aria-pressed', String(b[i].getAttribute('data-set') === l));
+  }
+
+  function elegir(l) {
+    pintar(l);
+    try { localStorage.setItem('cv-idioma', l); } catch (e) {}
+  }
+
+  var botones = document.querySelectorAll('[data-set]');
+  for (var i = 0; i < botones.length; i++) {
+    botones[i].addEventListener('click', function () { elegir(this.getAttribute('data-set')); });
+  }
+
+  // El nombre del PDF sale del título del documento al imprimir.
+  document.getElementById('pdf').addEventListener('click', function () {
+    var antes = document.title;
+    document.title = ARCHIVO[raiz.getAttribute('data-lang')];
+    window.print();
+    document.title = antes;
+  });
+
+  // ?lang= manda (lo usa la generación del PDF); luego lo guardado y por último el navegador.
+  var pedido = new URLSearchParams(location.search).get('lang');
+  var guardado = null;
+  try { guardado = localStorage.getItem('cv-idioma'); } catch (e) {}
+  var inicial = pedido || guardado || ((navigator.language || 'es').slice(0, 2) === 'es' ? 'es' : 'en');
+  pintar(inicial === 'en' ? 'en' : 'es');
+</script>
+</body>
+</html>
