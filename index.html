@@ -5,170 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FollowApp, Chat Privacy Shield y Best CV</title>
 <meta name="description" content="Dos extensiones de Chrome y una web para mejorar tu CV con IA: sin contraseña, sin cuenta y sin guardar tus datos.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
-<style>
-  :root {
-    --ground: #0E161C;
-    --surface: #16212A;
-    --surface-2: #1C2933;
-    --rule: #2C3B45;
-    --rule-soft: #223038;
-    --ink: #E8EFF3;
-    --ink-soft: #B9CAD4;
-    --muted: #7D919D;
-    --accent: #4FC7D1;
-    --ok: #6FBE8C;
-    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
-    --body: 'Source Serif 4', Georgia, serif;
-    --mono: 'JetBrains Mono', Consolas, monospace;
-  }
-
-  * { box-sizing: border-box; }
-
-  html, body { background: var(--ground); }
-
-  body {
-    margin: 0;
-    color: var(--ink);
-    font-family: var(--body);
-    font-size: 17px;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .wrap { max-width: 720px; margin: 0 auto; padding-block: 0 72px; padding-inline: 24px; }
-
-  a { color: var(--accent); }
-  [hidden] { display: none !important; }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
-
-  /* ---------------- cabecera ---------------- */
-
-  header {
-    display: flex; align-items: center; gap: 14px;
-    padding: 32px 0 22px; border-bottom: 1px solid var(--rule);
-  }
-  header .who { flex: 1; min-width: 0; }
-  header h1 {
-    font-family: var(--mono); font-size: 13px; font-weight: 500;
-    margin: 0; color: var(--ink-soft); letter-spacing: 0.02em;
-  }
-  header p { margin: 0; font-size: 12px; color: var(--muted); font-family: var(--mono); }
-
-  .langs { display: flex; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
-  .langs button {
-    background: none; border: 0; padding: 6px 12px; cursor: pointer;
-    font-family: var(--mono); font-size: 11px; color: var(--muted);
-  }
-  .langs button.on { background: var(--accent); color: #06222A; font-weight: 500; }
-  .langs button:not(.on):hover { color: var(--ink); }
-
-  /* ---------------- tesis ---------------- */
-
-  .hero { padding: 48px 0 8px; }
-  .hero h2 {
-    font-family: var(--display); font-weight: 700;
-    font-size: clamp(30px, 7vw, 42px); line-height: 1.12;
-    letter-spacing: -0.025em; margin: 0 0 18px; text-wrap: balance;
-  }
-  .hero p { margin: 0; font-size: 19px; color: var(--ink-soft); max-width: 34em; }
-
-  .sin {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    margin: 26px 0 0; padding: 0; list-style: none;
-  }
-  .sin li {
-    font-family: var(--mono); font-size: 11.5px; color: var(--muted);
-    border: 1px solid var(--rule); border-radius: 4px; padding: 5px 10px;
-  }
-
-  /* ---------------- aviso de movil ---------------- */
-
-  .movil {
-    margin-top: 38px; padding: 18px 20px;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
-  }
-  .movil strong {
-    display: block; font-family: var(--display); font-weight: 600;
-    font-size: 16px; margin-bottom: 6px;
-  }
-  .movil p { margin: 0 0 14px; font-size: 15px; color: var(--ink-soft); }
-  .acciones { display: flex; flex-wrap: wrap; gap: 8px; }
-  .acciones button, .acciones a {
-    font-family: var(--display); font-size: 13px; font-weight: 600;
-    padding: 9px 14px; border-radius: 5px; cursor: pointer;
-    border: 1px solid var(--rule); background: var(--surface-2);
-    color: var(--ink); text-decoration: none;
-  }
-  .acciones button:hover, .acciones a:hover { border-color: var(--accent); color: var(--accent); }
-  .dicho { font-family: var(--mono); font-size: 12px; color: var(--ok); margin: 12px 0 0; }
-
-  /* ---------------- las dos extensiones ---------------- */
-
-  .apps { display: flex; flex-direction: column; gap: 22px; margin-top: 44px; }
-
-  .app {
-    background: var(--surface); border: 1px solid var(--rule);
-    border-top: 2px solid var(--tono); border-radius: 6px;
-    padding: 26px 24px 24px;
-  }
-  .app.followapp { --tono: var(--accent); }
-  .app.shield { --tono: var(--ok); }
-  .app.cv { --tono: #E9B35A; }
-
-  .donde {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--tono); margin: 0 0 10px;
-  }
-  .app h3 {
-    font-family: var(--display); font-weight: 600; font-size: 25px;
-    letter-spacing: -0.015em; margin: 0 0 4px; text-wrap: balance;
-  }
-  .nombre { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin: 0 0 16px; }
-  .app p.que { margin: 0 0 18px; color: var(--ink-soft); font-size: 16px; }
-
-  .app ul { margin: 0 0 22px; padding: 0; list-style: none; }
-  .app li {
-    position: relative; padding: 7px 0 7px 20px; font-size: 15px;
-    border-top: 1px solid var(--rule-soft); color: var(--ink-soft);
-  }
-  .app li:first-child { border-top: 0; }
-  .app li::before {
-    content: ''; position: absolute; left: 2px; top: 16px;
-    width: 6px; height: 6px; border-radius: 50%; background: var(--tono);
-  }
-
-  .cta {
-    display: inline-block; font-family: var(--display); font-weight: 600;
-    font-size: 14.5px; text-decoration: none; padding: 11px 20px;
-    border-radius: 5px; background: var(--tono); color: #06222A;
-  }
-  .cta:hover { filter: brightness(1.12); }
-  .pie-app { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
-  .pie-app a.mas { font-size: 13.5px; color: var(--muted); }
-  .pie-app a.mas:hover { color: var(--accent); }
-
-  /* ---------------- cierre ---------------- */
-
-  footer {
-    margin-top: 52px; padding-top: 22px; border-top: 1px solid var(--rule);
-    font-size: 13.5px; color: var(--muted);
-  }
-  footer p { margin: 0 0 8px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; animation: none !important; }
-  }
-</style>
+<link rel="stylesheet" href="assets/sitio.css">
 </head>
 <body>
 <div class="wrap">
 
   <header>
     <div class="who">
-      <h1>arturdev98</h1>
+      <p class="marca">arturdev98</p>
       <p data-es="extensiones de Chrome y apps web" data-en="Chrome extensions and web apps">extensiones de Chrome y apps web</p>
     </div>
     <div class="langs">
@@ -178,7 +22,7 @@
   </header>
 
   <section class="hero">
-    <h2 data-es="Herramientas pequeñas que no te piden nada" data-en="Small tools that ask you for nothing">Herramientas pequeñas que no te piden nada</h2>
+    <h1 data-es="Herramientas pequeñas que no te piden nada" data-en="Small tools that ask you for nothing">Herramientas pequeñas que no te piden nada</h1>
     <p data-es="Ni contraseña ni cuenta. Las extensiones trabajan dentro de tu navegador y tus datos se quedan ahí; la web de CVs procesa el tuyo y no lo guarda." data-en="No password, no account. The extensions work inside your browser and your data stays there; the CV site processes yours and does not keep it.">Ni contraseña ni cuenta. Las extensiones trabajan dentro de tu navegador y tus datos se quedan ahí; la web de CVs procesa el tuyo y no lo guarda.</p>
     <ul class="sin">
       <li data-es="sin contraseña" data-en="no password">sin contraseña</li>
@@ -262,88 +106,6 @@
 
 </div>
 
-<script>
-  var IDIOMA = 'es';
-
-  function pintar(l) {
-    IDIOMA = l;
-    document.documentElement.lang = l;
-    var nodos = document.querySelectorAll('[data-' + l + ']');
-    for (var i = 0; i < nodos.length; i++) {
-      nodos[i].textContent = nodos[i].getAttribute('data-' + l);
-    }
-    document.getElementById('b-es').classList.toggle('on', l === 'es');
-    document.getElementById('b-en').classList.toggle('on', l === 'en');
-    correo();
-  }
-
-  document.getElementById('b-es').addEventListener('click', function () { pintar('es'); });
-  document.getElementById('b-en').addEventListener('click', function () { pintar('en'); });
-
-  var ENLACES = {
-    followapp: 'https://chromewebstore.google.com/detail/nffhilcgedjjoednagidnimjnembkdho',
-    shield: 'https://chromewebstore.google.com/detail/chat-privacy-shield/gillcdhclnchpkbifcnipfckmapodjpm'
-  };
-
-  function enlace() { return location.href.split('#')[0]; }
-
-  function correo() {
-    var a = document.getElementById('correo');
-    var asunto = IDIOMA === 'es' ? 'Las extensiones que quiero instalar' : 'The extensions I want to install';
-    var cuerpo = enlace() + '\n\nFollowApp (Instagram)\n' + ENLACES.followapp +
-      '\n\nChat Privacy Shield (WhatsApp Web)\n' + ENLACES.shield + '\n';
-    a.href = 'mailto:?subject=' + encodeURIComponent(asunto) + '&body=' + encodeURIComponent(cuerpo);
-  }
-
-  function avisar(texto) {
-    var d = document.getElementById('dicho');
-    d.textContent = texto;
-    d.hidden = false;
-  }
-
-  // Portapapeles bloqueado, que pasa dentro de iframes: queda el metodo viejo.
-  function respaldo(texto, ok, mal) {
-    var t = document.createElement('textarea');
-    t.value = texto;
-    t.setAttribute('readonly', '');
-    t.style.position = 'fixed';
-    t.style.opacity = '0';
-    document.body.appendChild(t);
-    t.select();
-    var fue = false;
-    try { fue = document.execCommand('copy'); } catch (e) { fue = false; }
-    document.body.removeChild(t);
-    avisar(fue ? ok : mal);
-  }
-
-  document.getElementById('copiar').addEventListener('click', function () {
-    var texto = enlace();
-    var ok = IDIOMA === 'es' ? 'Enlace copiado' : 'Link copied';
-    var mal = IDIOMA === 'es' ? 'Cópialo de la barra de arriba' : 'Copy it from the address bar';
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(texto).then(function () { avisar(ok); }, function () { respaldo(texto, ok, mal); });
-    } else {
-      respaldo(texto, ok, mal);
-    }
-  });
-
-  if (navigator.share) {
-    var boton = document.getElementById('compartir');
-    boton.hidden = false;
-    boton.addEventListener('click', function () {
-      navigator.share({ url: enlace() }).catch(function () {});
-    });
-  }
-
-  // Una extension de Chrome no se instala en un telefono: hay que decirlo.
-  var esMovil = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-    (window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 900);
-  if (esMovil) document.getElementById('movil').hidden = false;
-
-  // El navegador decide el idioma de partida; los botones mandan por encima.
-  if ((navigator.language || 'es').slice(0, 2) !== 'es') pintar('en');
-  else correo();
-</script>
+<script type="module" src="assets/main.js"></script>
 </body>
 </html>

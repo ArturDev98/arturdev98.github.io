@@ -1,0 +1,22 @@
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  testDir: '.',
+  testMatch: '*.spec.mjs',
+  fullyParallel: true,
+  reporter: 'list',
+  use: {
+    baseURL: 'http://127.0.0.1:4173',
+    // El público principal habla español; la prueba de ES/EN cubre el inglés.
+    locale: 'es-ES',
+  },
+  webServer: {
+    command: 'node servidor.mjs',
+    port: 4173,
+    reuseExistingServer: true,
+  },
+  projects: [
+    { name: 'escritorio', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } } },
+    { name: 'movil', use: { ...devices['Pixel 7'] } },
+  ],
+});
