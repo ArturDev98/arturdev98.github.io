@@ -1,5 +1,6 @@
 import { montarEscenaCSS } from './escena.js';
 import { crearDemoFollowapp } from './demos/followapp.js';
+import { crearDemoShield } from './demos/shield.js';
 
 var IDIOMA = 'es';
 
@@ -89,6 +90,7 @@ else correo();
 function demo(nombre) { return document.querySelector('.demo[data-demo="' + nombre + '"]'); }
 window.__demos = {
   followapp: crearDemoFollowapp(demo('followapp')),
+  shield: crearDemoShield(demo('shield')),
 };
 
 /* ---------- portada ---------- */
