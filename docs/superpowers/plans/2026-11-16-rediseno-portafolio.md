@@ -81,8 +81,8 @@ pruebas/package.json, pruebas/playwright.config.mjs, pruebas/servidor.mjs, prueb
   `"test": "playwright test"`; config con `webServer: { command: 'node servidor.mjs', port: 4173 }`,
   proyectos `escritorio` (1440×900) y `movil` (devices `Pixel 7`). `servidor.mjs`: `http` nativo,
   tipos MIME para html/css/js/mjs/svg/png/woff2. `.gitignore`: `pruebas/node_modules/`,
-  `pruebas/test-results/`, `pruebas/playwright-report/`. Instalar con npx de Node 22:
-  `npm ci` no aplica aún → `npm install` y `npx playwright install chromium`.
+  `pruebas/test-results/`, `pruebas/playwright-report/`. En `pruebas/`, con el npm de Node 22:
+  `npm install` y `npx playwright install chromium`.
 
 - [ ] **Step 2: Escribir `base.spec.mjs` (debe fallar)**
 
@@ -413,9 +413,10 @@ test('favicon y metadatos', async ({ page, request }) => {
 });
 test('peso en móvil < 150 KB comprimido', async ({ page }, info) => {
   test.skip(info.project.name !== 'movil');
-  const zlib = await import('node:zlib'); let total = 0;
-  page.on('response', async (r) => { if (/\.(m?js|css|html)$|\/$/.test(r.url())) total += zlib.gzipSync(await r.body()).length; });
+  const zlib = await import('node:zlib'); const tamaños = [];
+  page.on('response', (r) => { if (/\.(m?js|css|html)$|\/$/.test(r.url())) tamaños.push(r.body().then((b) => zlib.gzipSync(b).length)); });
   await page.goto('/'); await page.waitForLoadState('networkidle');
+  const total = (await Promise.all(tamaños)).reduce((a, b) => a + b, 0);
   expect(total).toBeLessThan(150 * 1024);
 });
 ```
@@ -424,7 +425,8 @@ test('peso en móvil < 150 KB comprimido', async ({ page }, info) => {
 - [ ] **Step 3: Implementar** el favicon del spec (una "a" minúscula en Archivo 800, cian
   `#4FC7D1`, sobre cuadrado redondeado `#0E161C`, con un arco de lupa a medias, con el texto
   convertido a trazado), los PNG renderizados con Chrome headless desde un HTML temporal en el
-  scratchpad, y las metaetiquetas.
+  scratchpad, y las metaetiquetas. `og.png`: fondo `#0E161C`, el titular de la portada en Archivo
+  800, los tres nombres de las apps cada uno con su tono, y "arturdev98.github.io" en mono.
 - [ ] **Step 4: Ver pasar** toda la suite.
 - [ ] **Step 5: Revisión visual:** capturas 390 px y 1440 px, ES y EN, y con movimiento reducido;
   revisarlas contra las anti-metas del spec.
