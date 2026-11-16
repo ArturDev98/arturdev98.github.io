@@ -5,106 +5,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FollowApp, Chat Privacy Shield y Best CV</title>
 <meta name="description" content="Dos extensiones de Chrome y una web para mejorar tu CV con IA: sin contraseña, sin cuenta y sin guardar tus datos.">
+<meta name="theme-color" content="#0E161C">
+<link rel="preload" href="fonts/archivo-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/sitio.css">
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <div class="who">
-      <p class="marca">arturdev98</p>
-      <p data-es="extensiones de Chrome y apps web" data-en="Chrome extensions and web apps">extensiones de Chrome y apps web</p>
-    </div>
-    <div class="langs">
-      <button type="button" id="b-es" class="on">ES</button>
-      <button type="button" id="b-en">EN</button>
-    </div>
-  </header>
+<header class="barra wrap">
+  <p class="marca">arturdev98</p>
+  <div class="langs" role="group" aria-label="Idioma">
+    <button type="button" id="b-es" class="on">ES</button>
+    <button type="button" id="b-en">EN</button>
+  </div>
+</header>
 
-  <section class="hero">
-    <h1 data-es="Herramientas pequeñas que no te piden nada" data-en="Small tools that ask you for nothing">Herramientas pequeñas que no te piden nada</h1>
-    <p data-es="Ni contraseña ni cuenta. Las extensiones trabajan dentro de tu navegador y tus datos se quedan ahí; la web de CVs procesa el tuyo y no lo guarda." data-en="No password, no account. The extensions work inside your browser and your data stays there; the CV site processes yours and does not keep it.">Ni contraseña ni cuenta. Las extensiones trabajan dentro de tu navegador y tus datos se quedan ahí; la web de CVs procesa el tuyo y no lo guarda.</p>
-    <ul class="sin">
-      <li data-es="sin contraseña" data-en="no password">sin contraseña</li>
-      <li data-es="sin cuenta" data-en="no account">sin cuenta</li>
-      <li data-es="sin guardar tus datos" data-en="nothing stored">sin guardar tus datos</li>
-      <li data-es="sin analítica" data-en="no analytics">sin analítica</li>
-    </ul>
+<main>
+
+  <section id="portada" class="portada">
+    <div class="portada-css" aria-hidden="true">
+      <span class="mancha m1"></span><span class="mancha m2"></span><span class="mancha m3"></span>
+      <div class="vidrio"></div>
+      <div class="nitido"><span class="mancha m1"></span><span class="mancha m2"></span><span class="mancha m3"></span></div>
+    </div>
+    <canvas id="portada-gl" hidden aria-hidden="true"></canvas>
+    <div class="portada-texto wrap">
+      <h1 data-es="Herramientas pequeñas que no te piden nada" data-en="Small tools that ask you for nothing">Herramientas pequeñas que no te piden nada</h1>
+      <p class="tesis" data-es="Ni contraseña ni cuenta. Las extensiones trabajan dentro de tu navegador y tus datos se quedan ahí; la web de CVs procesa el tuyo y no lo guarda." data-en="No password, no account. The extensions work inside your browser and your data stays there; the CV site processes yours and does not keep it.">Ni contraseña ni cuenta. Las extensiones trabajan dentro de tu navegador y tus datos se quedan ahí; la web de CVs procesa el tuyo y no lo guarda.</p>
+      <ul class="sin">
+        <li data-es="sin contraseña" data-en="no password">sin contraseña</li>
+        <li data-es="sin cuenta" data-en="no account">sin cuenta</li>
+        <li data-es="sin guardar tus datos" data-en="nothing stored">sin guardar tus datos</li>
+        <li data-es="sin analítica" data-en="no analytics">sin analítica</li>
+      </ul>
+    </div>
   </section>
 
-  <section class="movil" id="movil" hidden>
-    <strong data-es="Estás en el móvil" data-en="You are on a phone">Estás en el móvil</strong>
-    <p data-es="Las extensiones de Chrome solo se instalan en un ordenador. Guárdate este enlace y ábrelo cuando estés delante de uno. Best CV sí funciona desde el móvil." data-en="Chrome extensions can only be installed on a computer. Save this link and open it when you are at one. Best CV does work on your phone.">Las extensiones de Chrome solo se instalan en un ordenador. Guárdate este enlace y ábrelo cuando estés delante de uno. Best CV sí funciona desde el móvil.</p>
-    <div class="acciones">
-      <button type="button" id="compartir" hidden data-es="Compartir" data-en="Share">Compartir</button>
-      <button type="button" id="copiar" data-es="Copiar enlace" data-en="Copy link">Copiar enlace</button>
-      <a id="correo" href="#" data-es="Enviármelo por correo" data-en="Email it to myself">Enviármelo por correo</a>
+  <section class="movil wrap" id="movil" hidden>
+    <div class="movil-caja">
+      <h2 data-es="Estás en el móvil" data-en="You are on a phone">Estás en el móvil</h2>
+      <p data-es="Las extensiones de Chrome solo se instalan en un ordenador. Guárdate este enlace y ábrelo cuando estés delante de uno. Best CV sí funciona desde el móvil." data-en="Chrome extensions can only be installed on a computer. Save this link and open it when you are at one. Best CV does work on your phone.">Las extensiones de Chrome solo se instalan en un ordenador. Guárdate este enlace y ábrelo cuando estés delante de uno. Best CV sí funciona desde el móvil.</p>
+      <div class="acciones">
+        <button type="button" id="compartir" hidden data-es="Compartir" data-en="Share">Compartir</button>
+        <button type="button" id="copiar" data-es="Copiar enlace" data-en="Copy link">Copiar enlace</button>
+        <a id="correo" href="#" data-es="Enviármelo por correo" data-en="Email it to myself">Enviármelo por correo</a>
+      </div>
+      <p class="dicho" id="dicho" role="status" hidden></p>
     </div>
-    <p class="dicho" id="dicho" hidden></p>
   </section>
 
-  <div class="apps">
-
-    <article class="app followapp">
-      <p class="donde">Instagram</p>
-      <h3 data-es="Quién te dejó de seguir" data-en="Who unfollowed you">Quién te dejó de seguir</h3>
-      <p class="nombre">FollowApp</p>
+  <section class="app wrap" id="followapp">
+    <div class="app-texto">
+      <h2 data-es="Quién te dejó de seguir" data-en="Who unfollowed you">Quién te dejó de seguir</h2>
+      <p class="app-nombre"><b>FollowApp</b> <span data-es="extensión de Chrome para Instagram" data-en="Chrome extension for Instagram">extensión de Chrome para Instagram</span></p>
       <p class="que" data-es="Instagram no te avisa cuando alguien se va. FollowApp lleva la cuenta por ti, y comprueba si esa cuenta sigue existiendo antes de decirte nada: una cuenta suspendida desaparece igual que alguien que se va, y no es lo mismo." data-en="Instagram never tells you when someone leaves. FollowApp keeps track for you, and checks whether that account still exists before telling you anything: a suspended account disappears just like someone who left, and those are not the same thing.">Instagram no te avisa cuando alguien se va. FollowApp lleva la cuenta por ti, y comprueba si esa cuenta sigue existiendo antes de decirte nada: una cuenta suspendida desaparece igual que alguien que se va, y no es lo mismo.</p>
       <ul>
         <li data-es="Quién se fue y quién llegó, con su foto y cuándo" data-en="Who left and who arrived, with their picture and when">Quién se fue y quién llegó, con su foto y cuándo</li>
         <li data-es="Quién no te sigue de vuelta" data-en="Who does not follow you back">Quién no te sigue de vuelta</li>
-        <li data-es="Agrupa a quien te sigue y te deja de seguir una y otra vez" data-en="Groups the accounts that follow and unfollow you over and over">Agrupa a quien te sigue y te deja de seguir una y otra vez</li>
-        <li data-es="Revisa sola en segundo plano, sin que abras nada" data-en="Checks on its own in the background, nothing to open">Revisa sola en segundo plano, sin que abras nada</li>
-        <li data-es="Sin pedir el ZIP de datos a Meta ni esperar 48 horas" data-en="No data export from Meta, no 48-hour wait">Sin pedir el ZIP de datos a Meta ni esperar 48 horas</li>
+        <li data-es="Revisa sola en segundo plano, sin pedir el ZIP de datos a Meta" data-en="Checks on its own in the background, no data export from Meta">Revisa sola en segundo plano, sin pedir el ZIP de datos a Meta</li>
       </ul>
-      <div class="pie-app">
-        <a class="cta" href="https://chromewebstore.google.com/detail/nffhilcgedjjoednagidnimjnembkdho" data-es="Añadir a Chrome" data-en="Add to Chrome">Añadir a Chrome</a>
-        <a class="mas" href="https://arturdev98.github.io/followapp/" data-es="Política de privacidad" data-en="Privacy policy">Política de privacidad</a>
-      </div>
-    </article>
+    </div>
+    <div class="demo" data-demo="followapp"></div>
+    <div class="app-pie">
+      <a class="cta" href="https://chromewebstore.google.com/detail/nffhilcgedjjoednagidnimjnembkdho"><span data-es="Añadir a Chrome" data-en="Add to Chrome">Añadir a Chrome</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/></svg></a>
+      <a class="mas" href="https://arturdev98.github.io/followapp/" data-es="Política de privacidad" data-en="Privacy policy">Política de privacidad</a>
+    </div>
+  </section>
 
-    <article class="app shield">
-      <p class="donde">WhatsApp Web</p>
-      <h3 data-es="Que nadie lea por encima del hombro" data-en="So nobody reads over your shoulder">Que nadie lea por encima del hombro</h3>
-      <p class="nombre">Chat Privacy Shield</p>
+  <section class="app wrap" id="shield">
+    <div class="app-texto">
+      <h2 data-es="Que nadie lea por encima del hombro" data-en="So nobody reads over your shoulder">Que nadie lea por encima del hombro</h2>
+      <p class="app-nombre"><b>Chat Privacy Shield</b> <span data-es="extensión de Chrome para WhatsApp Web" data-en="Chrome extension for WhatsApp Web">extensión de Chrome para WhatsApp Web</span></p>
       <p class="que" data-es="Difumina la lista de chats, los nombres, las fotos y las imágenes compartidas en WhatsApp Web. Pasas el ratón por encima y se revela; lo apartas y vuelve a taparse." data-en="Blurs your chat list, names, photos and shared images on WhatsApp Web. Hover to reveal; move away and it covers itself again.">Difumina la lista de chats, los nombres, las fotos y las imágenes compartidas en WhatsApp Web. Pasas el ratón por encima y se revela; lo apartas y vuelve a taparse.</p>
       <ul>
-        <li data-es="Difuminado ajustable, de 2 a 20 píxeles" data-en="Adjustable blur, from 2 to 20 pixels">Difuminado ajustable, de 2 a 20 píxeles</li>
         <li data-es="Oculta nombres, fotos y hasta lo que estás escribiendo" data-en="Hides names, photos and even what you are typing">Oculta nombres, fotos y hasta lo que estás escribiendo</li>
         <li data-es="Se revela al pasar el ratón o con un atajo de teclado" data-en="Reveals on hover or with a keyboard shortcut">Se revela al pasar el ratón o con un atajo de teclado</li>
-        <li data-es="Se vuelve a tapar sola tras un rato sin actividad" data-en="Covers itself again after a while of inactivity">Se vuelve a tapar sola tras un rato sin actividad</li>
         <li data-es="Los contadores de no leídos siguen visibles" data-en="Unread counters stay visible">Los contadores de no leídos siguen visibles</li>
       </ul>
-      <div class="pie-app">
-        <a class="cta" href="https://chromewebstore.google.com/detail/chat-privacy-shield/gillcdhclnchpkbifcnipfckmapodjpm" data-es="Añadir a Chrome" data-en="Add to Chrome">Añadir a Chrome</a>
-      </div>
-    </article>
+    </div>
+    <div class="demo" data-demo="shield"></div>
+    <div class="app-pie">
+      <a class="cta" href="https://chromewebstore.google.com/detail/chat-privacy-shield/gillcdhclnchpkbifcnipfckmapodjpm"><span data-es="Añadir a Chrome" data-en="Add to Chrome">Añadir a Chrome</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/></svg></a>
+    </div>
+  </section>
 
-    <article class="app cv">
-      <p class="donde" data-es="Web · con IA" data-en="Web · AI-powered">Web · con IA</p>
-      <h3 data-es="Tu CV, reescrito sin inventar nada" data-en="Your CV, rewritten without making anything up">Tu CV, reescrito sin inventar nada</h3>
-      <p class="nombre">Best CV</p>
+  <section class="app wrap" id="cv">
+    <div class="app-texto">
+      <h2 data-es="Tu CV, reescrito sin inventar nada" data-en="Your CV, rewritten without making anything up">Tu CV, reescrito sin inventar nada</h2>
+      <p class="app-nombre"><b>Best CV</b> <span data-es="web con IA, también en el móvil" data-en="AI web app, works on your phone too">web con IA, también en el móvil</span></p>
       <p class="que" data-es="Subes tu CV, dices qué quieres destacar o pegas la vacante, y la IA lo reescribe y le da un diseño nuevo. Si le faltan datos para un logro, te pregunta en vez de inventarlo." data-en="Upload your CV, say what you want to highlight or paste the job posting, and the AI rewrites it with a fresh design. If an achievement is missing details, it asks you instead of making them up.">Subes tu CV, dices qué quieres destacar o pegas la vacante, y la IA lo reescribe y le da un diseño nuevo. Si le faltan datos para un logro, te pregunta en vez de inventarlo.</p>
       <ul>
-        <li data-es="Reescribe tus logros y los ordena por impacto" data-en="Rewrites your achievements and orders them by impact">Reescribe tus logros y los ordena por impacto</li>
         <li data-es="Lo adapta a una vacante y te dice qué requisitos te faltan" data-en="Tailors it to a job posting and tells you which requirements are missing">Lo adapta a una vacante y te dice qué requisitos te faltan</li>
         <li data-es="Roast de tu CV: puntaje honesto, chistes y un arreglo serio para cada uno" data-en="CV roast: an honest score, jokes and a serious fix for each one">Roast de tu CV: puntaje honesto, chistes y un arreglo serio para cada uno</li>
-        <li data-es="Editor con colores, foto y descarga en PDF" data-en="Editor with colors, photo and PDF download">Editor con colores, foto y descarga en PDF</li>
         <li data-es="No guarda tu CV: el resultado queda en tu navegador" data-en="Does not keep your CV: the result stays in your browser">No guarda tu CV: el resultado queda en tu navegador</li>
       </ul>
-      <div class="pie-app">
-        <a class="cta" href="https://best-cv-neon.vercel.app" data-es="Abrir Best CV" data-en="Open Best CV">Abrir Best CV</a>
-      </div>
-    </article>
+    </div>
+    <div class="demo" data-demo="cv"></div>
+    <div class="app-pie">
+      <a class="cta" href="https://best-cv-neon.vercel.app"><span data-es="Abrir Best CV" data-en="Open Best CV">Abrir Best CV</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/></svg></a>
+    </div>
+  </section>
 
-  </div>
+</main>
 
-  <footer>
-    <p data-es="Ninguna está afiliada a Instagram, WhatsApp, Meta, Google ni Anthropic." data-en="None of them is affiliated with Instagram, WhatsApp, Meta, Google or Anthropic.">Ninguna está afiliada a Instagram, WhatsApp, Meta, Google ni Anthropic.</p>
-    <p>github.com/arturdev98</p>
-  </footer>
-
-</div>
+<footer class="pie wrap">
+  <p data-es="Ninguna está afiliada a Instagram, WhatsApp, Meta, Google ni Anthropic." data-en="None of them is affiliated with Instagram, WhatsApp, Meta, Google or Anthropic.">Ninguna está afiliada a Instagram, WhatsApp, Meta, Google ni Anthropic.</p>
+  <p>github.com/arturdev98</p>
+</footer>
 
 <script type="module" src="assets/main.js"></script>
 </body>
