@@ -95,6 +95,38 @@ window.__demos = {
   cv: crearDemoCV(demo('cv')),
 };
 
+// Fijar la sección solo cabe si la pantalla es alta: si no, el texto quedaría cortado mientras dura.
+export function modoDemos() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 'quieto';
+  if (window.matchMedia('(pointer: fine)').matches && window.innerWidth >= 900 && window.innerHeight >= 640) return 'escritorio';
+  return 'movil';
+}
+
+export function montarDemos(modo) {
+  var nombres = Object.keys(window.__demos);
+  if (modo === 'quieto' || !window.ScrollTrigger) {
+    nombres.forEach(function (n) { window.__demos[n].progress(1); });
+    return;
+  }
+  window.gsap.registerPlugin(window.ScrollTrigger);
+  nombres.forEach(function (n) {
+    var tl = window.__demos[n];
+    if (modo === 'escritorio') {
+      window.ScrollTrigger.create({
+        trigger: document.getElementById(n), pin: true, start: 'top top', end: '+=120%', scrub: 0.6, animation: tl,
+      });
+    } else {
+      tl.repeat(-1).repeatDelay(1.5);
+      window.ScrollTrigger.create({
+        trigger: demo(n), start: 'top 85%', end: 'bottom 10%',
+        onToggle: function (st) { if (st.isActive) tl.play(); else tl.pause(); },
+      });
+    }
+  });
+}
+
+montarDemos(modoDemos());
+
 /* ---------- portada ---------- */
 
 var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
