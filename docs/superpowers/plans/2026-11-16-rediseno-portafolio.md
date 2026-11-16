@@ -19,7 +19,7 @@ fuentes woff2 de Fontsource, Playwright 1.48.2 para las pruebas.
 ## Global Constraints
 
 - Node: el global es 16 y Playwright pide ≥ 20. Usar
-  `C:\Users\artur\AppData\Local\nvm\v22.18.0\node.exe` y su `npx.cmd`; no cambiar la versión global.
+  `%LOCALAPPDATA%\nvm\v22.18.0\node.exe` y su `npx.cmd`; no cambiar la versión global.
 - Sin paso de compilación; librerías en `vendor/`, fuentes en `fonts/`, nada desde CDN ni Google Fonts.
 - Archivo `.nojekyll` en la raíz para que GitHub Pages sirva todo tal cual.
 - Colores: fondo `#0E161C`, tinta `#E8EFF3`, secundaria `#B9CAD4`, reglas `#24333C`; FollowApp
