@@ -1,6 +1,7 @@
 import { montarEscenaCSS } from './escena.js';
 import { crearDemoFollowapp } from './demos/followapp.js';
 import { crearDemoShield } from './demos/shield.js';
+import { crearDemoCV } from './demos/cv.js';
 
 var IDIOMA = 'es';
 
@@ -91,6 +92,7 @@ function demo(nombre) { return document.querySelector('.demo[data-demo="' + nomb
 window.__demos = {
   followapp: crearDemoFollowapp(demo('followapp')),
   shield: crearDemoShield(demo('shield')),
+  cv: crearDemoCV(demo('cv')),
 };
 
 /* ---------- portada ---------- */

@@ -387,6 +387,50 @@ a { color: var(--ink); text-underline-offset: 0.22em; text-decoration-thickness:
 #intensidad { width: 100%; accent-color: var(--verde); min-height: 28px; cursor: pointer; }
 .sh-pista { margin: 10px 4px 0; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 
+/* ---------- demo: Best CV ---------- */
+
+.cvd {
+  position: relative; min-height: inherit; display: flex; flex-direction: column; gap: 18px;
+  padding: clamp(16px, 3vw, 28px);
+}
+/* La hoja es clara a propósito: un CV impreso dentro de la interfaz oscura. */
+.cvd-hoja {
+  padding: clamp(18px, 3vw, 28px); border-radius: 10px;
+  background: #F7F9FA; color: #0E161C;
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.8);
+}
+.cvd-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.cvd-etiqueta {
+  font-family: var(--mono); font-size: 11.5px; font-weight: 500; color: #5F717B;
+  padding: 3px 10px; border: 1px solid #D6DFE4; border-radius: 999px; transition: color 0.3s, border-color 0.3s;
+}
+.reescrito .cvd-etiqueta { color: #8A5A10; border-color: #E9B35A; background: #FBF1DE; }
+.cvd-seccion { font-family: var(--display); font-weight: 800; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #42525C; }
+.cvd-cargo { margin: 0 0 8px; font-family: var(--display); font-weight: 700; font-size: 17px; color: #0E161C; }
+.cvd-linea { display: grid; }
+.cvd-linea > * { grid-area: 1 / 1; align-self: start; margin: 0; font-family: var(--body); font-size: clamp(16px, 1.5vw, 18px); line-height: 1.55; color: #26343C; }
+/* El tachado es un fondo en línea: así recorre también la segunda línea si el texto se parte. */
+.logro-antes-txt {
+  background: linear-gradient(#C0392B, #C0392B) no-repeat 0 58% / calc(var(--tachado, 0) * 100%) 2px;
+}
+.palabra { display: inline-block; opacity: 0; }
+.palabra.dato {
+  font-weight: 600; color: #0E161C; padding: 0 2px; border-radius: 3px;
+  background: linear-gradient(#F6D9A4, #F6D9A4) no-repeat left center / calc(var(--resalte, 0) * 100%) 100%;
+}
+
+.cvd-chat { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+.burbuja, .respuesta {
+  max-width: 80%; margin: 0; padding: 10px 14px 11px; border-radius: 14px;
+  font-family: var(--display); font-size: 15px; font-weight: 700; line-height: 1.35;
+  visibility: hidden;
+}
+.burbuja small, .respuesta small { display: block; margin-bottom: 2px; font-family: var(--mono); font-size: 11px; font-weight: 500; }
+.burbuja { align-self: flex-start; background: rgba(233, 179, 90, 0.13); border: 1px solid rgba(233, 179, 90, 0.35); color: var(--ink); border-bottom-left-radius: 4px; }
+.burbuja small { color: var(--ambar); }
+.respuesta { align-self: flex-end; background: var(--surface-2); border: 1px solid var(--rule); color: var(--ink); border-bottom-right-radius: 4px; }
+.respuesta small { color: var(--muted); }
+
 /* ---------- pie ---------- */
 
 .pie {

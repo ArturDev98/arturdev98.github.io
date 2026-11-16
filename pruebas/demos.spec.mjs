@@ -56,6 +56,29 @@ test('la demo de Shield revela una fila a mitad de camino', async ({ page }) => 
   await expect(page.locator('[data-demo=shield] .chat.revelada-demo')).toHaveCount(0);
 });
 
+test('Best CV pregunta antes de reescribir', async ({ page }) => {
+  await page.goto('/');
+  const d = page.locator('[data-demo=cv]');
+  await avanzar(page, 'cv', 0.1);
+  await expect(d.locator('.logro-antes')).toContainText('Encargado de mejorar procesos');
+  await expect(d.locator('.logro')).toBeHidden();
+  await avanzar(page, 'cv', 0.5);
+  await expect(d.locator('.burbuja')).toContainText('¿Cuánto bajó el tiempo?');
+  await expect(d.locator('.burbuja')).toBeVisible();
+  await avanzar(page, 'cv', 1);
+  await expect(d.locator('.logro-antes')).toBeHidden();
+  await expect(d.locator('.logro')).toBeVisible();
+  await expect(d.locator('.logro')).not.toContainText('Encargado de mejorar procesos');
+  await expect(d.locator('.logro')).toContainText('%');
+});
+
+test('Best CV reescribe en inglés si se cambia de idioma al final', async ({ page }) => {
+  await page.goto('/');
+  await avanzar(page, 'cv', 1);
+  await page.getByRole('button', { name: 'EN', exact: true }).click();
+  await expect(page.locator('[data-demo=cv] .logro')).toContainText('Cut month-end close');
+});
+
 test('la demo cambia de idioma a medias', async ({ page }) => {
   await page.goto('/');
   await avanzar(page, 'followapp', 0.5);

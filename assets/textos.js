@@ -17,9 +17,12 @@ const TEXTOS = {
     cv_antes: 'Encargado de mejorar procesos del área contable.',
     cv_pregunta: '¿Cuánto bajó el tiempo?',
     cv_respuesta: 'De 3 días a 1',
-    cv_despues: 'Reduje en 66 % el tiempo de cierre mensual, de 3 días a 1, al automatizar la conciliación.',
+    cv_despues: 'Reduje en 66 % el tiempo de cierre mensual, de 3 días a 1, al automatizar la conciliación.',
     cv_etiqueta_antes: 'Tu CV',
     cv_etiqueta_despues: 'Best CV',
+    cv_seccion: 'Experiencia',
+    cv_cargo: 'Analista contable · 2022–2025',
+    cv_tu: 'Tú',
   },
   en: {
     fa_cuenta: '@your.account',
@@ -41,6 +44,9 @@ const TEXTOS = {
     cv_despues: 'Cut month-end close time by 66%, from 3 days to 1, by automating reconciliation.',
     cv_etiqueta_antes: 'Your CV',
     cv_etiqueta_despues: 'Best CV',
+    cv_seccion: 'Experience',
+    cv_cargo: 'Accountant · 2022–2025',
+    cv_tu: 'You',
   },
 };
 
