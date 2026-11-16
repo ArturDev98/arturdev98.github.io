@@ -1,4 +1,5 @@
 import { montarEscenaCSS } from './escena.js';
+import { crearDemoFollowapp } from './demos/followapp.js';
 
 var IDIOMA = 'es';
 
@@ -82,6 +83,13 @@ if (esMovil) document.getElementById('movil').hidden = false;
 // El navegador decide el idioma de partida; los botones mandan por encima.
 if ((navigator.language || 'es').slice(0, 2) !== 'es') pintar('en');
 else correo();
+
+/* ---------- demos ---------- */
+
+function demo(nombre) { return document.querySelector('.demo[data-demo="' + nombre + '"]'); }
+window.__demos = {
+  followapp: crearDemoFollowapp(demo('followapp')),
+};
 
 /* ---------- portada ---------- */
 
