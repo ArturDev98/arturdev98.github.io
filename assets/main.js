@@ -1,3 +1,5 @@
+import { montarEscenaCSS } from './escena.js';
+
 var IDIOMA = 'es';
 
 function pintar(l) {
@@ -80,3 +82,52 @@ if (esMovil) document.getElementById('movil').hidden = false;
 // El navegador decide el idioma de partida; los botones mandan por encima.
 if ((navigator.language || 'es').slice(0, 2) !== 'es') pintar('en');
 else correo();
+
+/* ---------- portada ---------- */
+
+var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+export function debeUsarWebGL() {
+  if (reducido || !window.matchMedia('(pointer: fine)').matches || window.innerWidth < 900) return false;
+  var c = document.createElement('canvas');
+  return !!(c.getContext('webgl2') || c.getContext('webgl'));
+}
+
+var portadaCSS = document.querySelector('.portada-css');
+montarEscenaCSS(portadaCSS);
+
+// La lupa CSS sigue al dedo o al cursor y vuelve a su recorrido tras un rato quieta.
+var lupaQuieta = 0;
+function seguir(e) {
+  var r = portadaCSS.getBoundingClientRect();
+  portadaCSS.style.setProperty('--lx', (e.clientX - r.left) + 'px');
+  portadaCSS.style.setProperty('--ly', (e.clientY - r.top) + 'px');
+  portadaCSS.classList.add('sigue');
+  clearTimeout(lupaQuieta);
+  lupaQuieta = setTimeout(function () { portadaCSS.classList.remove('sigue'); }, 2500);
+}
+var portada = document.getElementById('portada');
+portada.addEventListener('pointermove', seguir);
+portada.addEventListener('pointerdown', seguir);
+
+function arrancarWebGL() {
+  import('./portada-gl.js').then(function (m) {
+    var canvas = document.getElementById('portada-gl');
+    canvas.hidden = false;
+    try {
+      window.__portada = m.iniciarPortada(canvas);
+      portadaCSS.hidden = true;
+      portada.removeEventListener('pointermove', seguir);
+      portada.removeEventListener('pointerdown', seguir);
+    } catch (e) {
+      canvas.hidden = true;
+    }
+  }, function () {});
+}
+
+// three.js llega después del primer pintado y solo donde se va a ver.
+if (debeUsarWebGL()) {
+  var esperarFuentes = document.fonts ? document.fonts.ready : Promise.resolve();
+  if (document.readyState === 'complete') esperarFuentes.then(arrancarWebGL);
+  else window.addEventListener('load', function () { esperarFuentes.then(arrancarWebGL); });
+}

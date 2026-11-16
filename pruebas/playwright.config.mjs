@@ -9,6 +9,8 @@ export default defineConfig({
     baseURL: 'http://127.0.0.1:4173',
     // El público principal habla español; la prueba de ES/EN cubre el inglés.
     locale: 'es-ES',
+    // Sin GPU, Chromium solo da WebGL por software si se le pide.
+    launchOptions: { args: ['--enable-unsafe-swiftshader'] },
   },
   webServer: {
     command: 'node servidor.mjs',
