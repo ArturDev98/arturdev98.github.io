@@ -30,6 +30,14 @@ test('aviso de móvil solo en móvil', async ({ page }, info) => {
   await expect(page.locator('#movil')).toBeVisible({ visible: info.project.name === 'movil' });
 });
 
+test('el aviso de móvil se decide antes de pintar, sin esperar al módulo', async ({ page }, info) => {
+  test.skip(info.project.name !== 'movil');
+  // Si dependiera de main.js aparecería tarde y empujaría la página (CLS).
+  await page.route('**/assets/main.js', (r) => r.abort());
+  await page.goto('/');
+  await expect(page.locator('#movil')).toBeVisible();
+});
+
 test('copiar enlace avisa', async ({ page, context }, info) => {
   test.skip(info.project.name !== 'movil');
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);

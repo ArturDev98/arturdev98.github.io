@@ -180,7 +180,8 @@ a { color: var(--ink); text-underline-offset: 0.22em; text-decoration-thickness:
 
 /* ---------- aviso de móvil ---------- */
 
-.movil { padding-block: 8px 24px; }
+.movil { display: none; padding-block: 8px 24px; }
+.es-movil .movil { display: block; }
 .movil-caja {
   padding: 22px 20px 20px; border: 1px solid var(--rule); border-radius: 14px;
   background: var(--surface);
@@ -243,11 +244,11 @@ a { color: var(--ink); text-underline-offset: 0.22em; text-decoration-thickness:
   min-height: 48px; padding: 0 22px;
   border-radius: 999px; background: var(--tono); color: var(--sobre-tono);
   font-family: var(--display); font-weight: 800; font-size: 15px; text-decoration: none;
-  box-shadow: 0 10px 28px -14px var(--tono);
+  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.7);
   transition: transform 0.35s var(--salida), box-shadow 0.35s var(--salida);
 }
 .cta svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.35s var(--salida); }
-.cta:hover { transform: translateY(-1px); box-shadow: 0 16px 34px -14px var(--tono); }
+.cta:hover { transform: translateY(-1px); box-shadow: 0 16px 28px -12px rgba(0, 0, 0, 0.75); }
 .cta:hover svg { transform: translateX(3px); }
 .cta:active { transform: translateY(0); }
 .mas { font-size: 15px; color: var(--muted); }
@@ -258,7 +259,6 @@ a { color: var(--ink); text-underline-offset: 0.22em; text-decoration-thickness:
   min-height: 360px;
   border: 1px solid var(--rule); border-radius: 18px;
   background: linear-gradient(180deg, var(--surface) 0%, var(--ground-2) 100%);
-  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.7);
 }
 
 @media (min-width: 900px) {
@@ -302,7 +302,7 @@ a { color: var(--ink); text-underline-offset: 0.22em; text-decoration-thickness:
 .demo .fa-fila:first-of-type { border-top: 0; }
 .fa-avatar {
   width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
-  background: color-mix(in srgb, var(--av) 22%, var(--surface-2)); color: var(--av);
+  background: color-mix(in srgb, var(--av) 22%, var(--surface-2)); color: color-mix(in srgb, var(--av) 55%, #fff);
   font-size: 13px; font-weight: 800; letter-spacing: 0.02em;
 }
 .fa-quien { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }

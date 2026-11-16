@@ -51,5 +51,6 @@ test('pasar de escritorio a móvil no rompe nada', async ({ page }, info) => {
   await page.mouse.wheel(0, 3000);
   await page.waitForTimeout(500);
   expect(errores).toEqual([]);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  // ScrollTrigger recalcula las secciones fijadas con retardo tras redimensionar.
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 });

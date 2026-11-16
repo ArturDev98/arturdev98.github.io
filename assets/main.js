@@ -77,10 +77,6 @@ if (navigator.share) {
   });
 }
 
-// Una extension de Chrome no se instala en un telefono: hay que decirlo.
-var esMovil = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-  (window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 900);
-if (esMovil) document.getElementById('movil').hidden = false;
 
 // El navegador decide el idioma de partida; los botones mandan por encima.
 if ((navigator.language || 'es').slice(0, 2) !== 'es') pintar('en');

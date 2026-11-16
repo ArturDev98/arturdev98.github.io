@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { gzipSync } from 'node:zlib';
 
 const RAIZ = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const TIPOS = {
@@ -24,7 +25,15 @@ createServer(async (req, res) => {
   try {
     if ((await stat(archivo)).isDirectory()) { res.writeHead(301, { Location: ruta + '/' }).end(); return; }
     const cuerpo = await readFile(archivo);
-    res.writeHead(200, { 'Content-Type': TIPOS[extname(archivo)] || 'application/octet-stream' });
+    const tipo = TIPOS[extname(archivo)] || 'application/octet-stream';
+    // Comprime y cachea como GitHub Pages, para que Lighthouse mida lo que se publica.
+    const cabeceras = { 'Content-Type': tipo, 'Cache-Control': 'max-age=600' };
+    if (/text|javascript|json|svg/.test(tipo) && /gzip/.test(req.headers['accept-encoding'] || '')) {
+      res.writeHead(200, { ...cabeceras, 'Content-Encoding': 'gzip' });
+      res.end(gzipSync(cuerpo));
+      return;
+    }
+    res.writeHead(200, cabeceras);
     res.end(cuerpo);
   } catch {
     res.writeHead(404).end('no existe');
