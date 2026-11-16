@@ -1,4 +1,5 @@
 import { t } from '../textos.js';
+import { lineaQuieta } from './quieta.js';
 
 // Instantes (s): el logro nuevo empieza a escribirse y cada palabra tarda PASO en entrar.
 const REESCRIBE = 3.2;
@@ -63,15 +64,19 @@ export function crearDemoCV(raiz) {
 
   const gsap = window.gsap;
   let tl = null;
-  gsap.set([$('.burbuja'), $('.respuesta')], { autoAlpha: 0, y: 10 });
-  gsap.set(logro, { autoAlpha: 0 });
-  tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' }, onUpdate: pintarTiempo });
-  tl.fromTo($('.logro-antes-txt'), { '--tachado': 0 }, { '--tachado': 1, duration: 0.6, ease: 'power2.inOut' }, 0.6)
-    .to($('.burbuja'), { autoAlpha: 1, y: 0, duration: 0.45 }, 1.4)
-    .to($('.respuesta'), { autoAlpha: 1, y: 0, duration: 0.45 }, 2.2)
-    .to($('.logro-antes'), { autoAlpha: 0, y: -6, duration: 0.35 }, REESCRIBE - 0.2)
-    .to(logro, { autoAlpha: 1, duration: 0.01 }, REESCRIBE)
-    .to({}, { duration: 1.4 }, RESALTA);
+  if (gsap) {
+    gsap.set([$('.burbuja'), $('.respuesta')], { autoAlpha: 0, y: 10 });
+    gsap.set(logro, { autoAlpha: 0 });
+    tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' }, onUpdate: pintarTiempo });
+    tl.fromTo($('.logro-antes-txt'), { '--tachado': 0 }, { '--tachado': 1, duration: 0.6, ease: 'power2.inOut' }, 0.6)
+      .to($('.burbuja'), { autoAlpha: 1, y: 0, duration: 0.45 }, 1.4)
+      .to($('.respuesta'), { autoAlpha: 1, y: 0, duration: 0.45 }, 2.2)
+      .to($('.logro-antes'), { autoAlpha: 0, y: -6, duration: 0.35 }, REESCRIBE - 0.2)
+      .to(logro, { autoAlpha: 1, duration: 0.01 }, REESCRIBE)
+      .to({}, { duration: 1.4 }, RESALTA);
+  } else {
+    tl = lineaQuieta(raiz);
+  }
 
   document.addEventListener('idioma', pintarTextos);
   pintarTextos();

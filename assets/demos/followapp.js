@@ -1,4 +1,5 @@
 import { t, numero } from '../textos.js';
+import { lineaQuieta } from './quieta.js';
 
 const SEGUIDORES = [
   { nombre: 'Ana Vélez', cuenta: '@ana.vlz', tono: '#4FC7D1' },
@@ -67,16 +68,18 @@ export function crearDemoFollowapp(raiz) {
   const gsap = window.gsap;
   const barrido = $('.fa-barrido');
   const aviso = $('.aviso');
-  gsap.set(aviso, { autoAlpha: 0, y: 16 });
-  const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' }, onUpdate: () => pintar(false) });
-  tl.fromTo(barrido, { top: '0%', autoAlpha: 1 }, { top: '100%', autoAlpha: 0, duration: 0.9, ease: 'power1.inOut' }, 0)
-    .to(fila('se-va'), { backgroundColor: 'rgba(233,179,90,0.14)', duration: 0.3 }, 1.0)
-    .to(fila('se-va'), { height: 0, paddingTop: 0, paddingBottom: 0, autoAlpha: 0, duration: 0.5, ease: 'power3.inOut' }, 1.25)
-    .to(aviso, { autoAlpha: 1, y: 0, duration: 0.45 }, SE_VA)
-    .fromTo(barrido, { top: '0%', autoAlpha: 1 }, { top: '100%', autoAlpha: 0, duration: 0.8, ease: 'power1.inOut', immediateRender: false }, 3.4)
-    .to(aviso, { autoAlpha: 0, y: 10, duration: 0.25 }, 4.2)
-    .to(aviso, { autoAlpha: 1, y: 0, duration: 0.45 }, SUSPENDE + 0.05)
-    .to({}, { duration: 1 });
+  const tl = gsap ? gsap.timeline({ paused: true, defaults: { ease: 'power3.out' }, onUpdate: () => pintar(false) }) : lineaQuieta(raiz);
+  if (gsap) {
+    gsap.set(aviso, { autoAlpha: 0, y: 16 });
+    tl.fromTo(barrido, { top: '0%', autoAlpha: 1 }, { top: '100%', autoAlpha: 0, duration: 0.9, ease: 'power1.inOut' }, 0)
+      .to(fila('se-va'), { backgroundColor: 'rgba(233,179,90,0.14)', duration: 0.3 }, 1.0)
+      .to(fila('se-va'), { height: 0, paddingTop: 0, paddingBottom: 0, autoAlpha: 0, duration: 0.5, ease: 'power3.inOut' }, 1.25)
+      .to(aviso, { autoAlpha: 1, y: 0, duration: 0.45 }, SE_VA)
+      .fromTo(barrido, { top: '0%', autoAlpha: 1 }, { top: '100%', autoAlpha: 0, duration: 0.8, ease: 'power1.inOut', immediateRender: false }, 3.4)
+      .to(aviso, { autoAlpha: 0, y: 10, duration: 0.25 }, 4.2)
+      .to(aviso, { autoAlpha: 1, y: 0, duration: 0.45 }, SUSPENDE + 0.05)
+      .to({}, { duration: 1 });
+  }
 
   document.addEventListener('idioma', () => pintar(true));
   pintar(true);

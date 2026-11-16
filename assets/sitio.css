@@ -266,9 +266,13 @@ a { color: var(--ink); text-underline-offset: 0.22em; text-decoration-thickness:
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     grid-template-rows: auto auto;
     grid-template-areas: "texto demo" "pie demo";
-    align-content: center; column-gap: clamp(48px, 6vw, 96px); row-gap: 32px;
-    min-height: 100svh; padding-block: 112px;
+    align-content: center; column-gap: clamp(48px, 6vw, 96px); row-gap: clamp(20px, 3.5vh, 32px);
+    min-height: 100svh; padding-block: clamp(32px, 7vh, 112px);
   }
+  /* La sección se fija a pantalla completa: el texto escala con el alto para que el CTA quepa. */
+  .app h2 { max-width: 16ch; font-size: clamp(34px, min(5vw, 6.5vh), 60px); }
+  .que { margin-top: clamp(12px, 2.4vh, 22px); }
+  .app ul { margin-top: clamp(12px, 2.4vh, 22px); }
   .app-texto { align-self: end; }
   .app-pie { align-self: start; }
   .demo { min-height: 480px; align-self: center; }
@@ -439,6 +443,13 @@ a { color: var(--ink); text-underline-offset: 0.22em; text-decoration-thickness:
 }
 .pie p { margin: 0 0 6px; }
 .pie p:last-child { font-family: var(--mono); font-size: 12.5px; }
+
+/* Sin GSAP: estado final, quieto. */
+.demo.quieta .aviso, .demo.quieta .burbuja, .demo.quieta .respuesta { visibility: visible; }
+.demo.quieta .fa-fila.se-va, .demo.quieta .logro-antes { display: none; }
+
+/* La portada fuera de pantalla no gasta batería en animarse. */
+.portada-css.fuera .mancha, .portada-css.fuera .escena.nitida { animation-play-state: paused; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }

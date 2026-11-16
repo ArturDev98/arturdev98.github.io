@@ -1,7 +1,11 @@
 import { test, expect } from '@playwright/test';
 
 // progress() devuelve la línea de tiempo y Playwright se cuelga serializándola: no devolver nada.
-const avanzar = (page, demo, p) => page.evaluate(([d, x]) => { window.__demos[d].progress(x); }, [demo, p]);
+// Espera al montaje: ScrollTrigger fija el progreso al crearse y pisaría el de la prueba.
+const avanzar = async (page, demo, p) => {
+  await page.locator('html[data-demos]').waitFor({ state: 'attached' });
+  await page.evaluate(([d, x]) => { window.__demos[d].progress(x); }, [demo, p]);
+};
 
 test('FollowApp distingue a quien se fue de una cuenta suspendida', async ({ page }) => {
   await page.goto('/');

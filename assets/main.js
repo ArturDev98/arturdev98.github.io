@@ -85,10 +85,14 @@ else correo();
 /* ---------- demos ---------- */
 
 function demo(nombre) { return document.querySelector('.demo[data-demo="' + nombre + '"]'); }
+// Una demo que falla no debe llevarse por delante a las otras ni a la portada.
+function crear(nombre, fn) {
+  try { return fn(demo(nombre)); } catch (e) { return null; }
+}
 window.__demos = {
-  followapp: crearDemoFollowapp(demo('followapp')),
-  shield: crearDemoShield(demo('shield')),
-  cv: crearDemoCV(demo('cv')),
+  followapp: crear('followapp', crearDemoFollowapp),
+  shield: crear('shield', crearDemoShield),
+  cv: crear('cv', crearDemoCV),
 };
 
 // Fijar la sección solo cabe si la pantalla es alta: si no, el texto quedaría cortado mientras dura.
@@ -99,15 +103,16 @@ export function modoDemos() {
 }
 
 export function montarDemos(modo) {
-  var nombres = Object.keys(window.__demos);
-  if (modo === 'quieto' || !window.ScrollTrigger) {
+  var nombres = Object.keys(window.__demos).filter(function (n) { return window.__demos[n]; });
+  if (modo === 'quieto' || !window.gsap || !window.ScrollTrigger) {
     nombres.forEach(function (n) { window.__demos[n].progress(1); });
     return;
   }
   window.gsap.registerPlugin(window.ScrollTrigger);
   nombres.forEach(function (n) {
     var tl = window.__demos[n];
-    if (modo === 'escritorio') {
+    // Fijada, una sección más alta que la pantalla escondería su CTA mientras dura.
+    if (modo === 'escritorio' && document.getElementById(n).offsetHeight <= window.innerHeight) {
       window.ScrollTrigger.create({
         trigger: document.getElementById(n), pin: true, start: 'top top', end: '+=120%', scrub: 0.6, animation: tl,
       });
@@ -121,7 +126,12 @@ export function montarDemos(modo) {
   });
 }
 
-montarDemos(modoDemos());
+// El alto de cada sección depende de las fuentes; se mide cuando ya llegaron.
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(function () {
+  var modo = modoDemos();
+  montarDemos(modo);
+  document.documentElement.dataset.demos = modo;
+});
 
 /* ---------- portada ---------- */
 
@@ -149,6 +159,12 @@ function seguir(e) {
 var portada = document.getElementById('portada');
 portada.addEventListener('pointermove', seguir);
 portada.addEventListener('pointerdown', seguir);
+
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(function (e) {
+    portadaCSS.classList.toggle('fuera', !e[0].isIntersecting);
+  }).observe(portada);
+}
 
 function arrancarWebGL() {
   import('./portada-gl.js').then(function (m) {

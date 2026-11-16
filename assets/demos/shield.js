@@ -1,4 +1,5 @@
 import { t, idioma } from '../textos.js';
+import { lineaQuieta } from './quieta.js';
 
 const CHATS = [
   { quien: 'Mamá', who: 'Mom', es: '¿Ya llegaste? Avísame', en: 'Home yet? Let me know', hora: '21:04', sin_leer: 2, tono: '#E9B35A' },
@@ -73,12 +74,14 @@ export function crearDemoShield(raiz) {
   // Centro vertical de una fila, relativo a la demo, para llevar ahí el cursor.
   const alturaDe = (i) => () => filas[i].offsetTop + filas[i].offsetHeight / 2 - 6;
 
-  const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.inOut' }, onUpdate: pintarDemo });
-  tl.fromTo(cursor, { autoAlpha: 0, x: () => raiz.clientWidth * 0.8, y: () => raiz.clientHeight }, { autoAlpha: 1, duration: 0.3 }, 0.2)
-    .to(cursor, { x: () => raiz.clientWidth * 0.42, y: alturaDe(1), duration: 0.6 }, 0.3)
-    .to(cursor, { x: () => raiz.clientWidth * 0.5, y: alturaDe(3), duration: 0.6 }, 2.3)
-    .to(cursor, { x: () => raiz.clientWidth * 0.85, y: () => raiz.clientHeight * 0.95, autoAlpha: 0, duration: 0.7 }, 4.3)
-    .to({}, { duration: 0.6 });
+  const tl = gsap ? gsap.timeline({ paused: true, defaults: { ease: 'power3.inOut' }, onUpdate: pintarDemo }) : lineaQuieta(raiz);
+  if (gsap) {
+    tl.fromTo(cursor, { autoAlpha: 0, x: () => raiz.clientWidth * 0.8, y: () => raiz.clientHeight }, { autoAlpha: 1, duration: 0.3 }, 0.2)
+      .to(cursor, { x: () => raiz.clientWidth * 0.42, y: alturaDe(1), duration: 0.6 }, 0.3)
+      .to(cursor, { x: () => raiz.clientWidth * 0.5, y: alturaDe(3), duration: 0.6 }, 2.3)
+      .to(cursor, { x: () => raiz.clientWidth * 0.85, y: () => raiz.clientHeight * 0.95, autoAlpha: 0, duration: 0.7 }, 4.3)
+      .to({}, { duration: 0.6 });
+  }
 
   function pintarDemo() {
     const tiempo = tl.time();
