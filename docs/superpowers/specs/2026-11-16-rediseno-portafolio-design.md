@@ -109,7 +109,7 @@ Se mantiene la base del CV y del banner de LinkedIn, para que todo se vea de la 
 │ 03 Best CV          │  demo: un logro que    │
 │                     │  se reescribe          │
 ├──────────────────────────────────────────────┤
-│ pie: aviso de no afiliación · GitHub · CV    │
+│ pie: aviso de no afiliación · GitHub         │
 └──────────────────────────────────────────────┘
 ```
 
@@ -157,9 +157,8 @@ estilo. Va justo después de la portada.
 
 ### Pie
 
-Se mantiene el aviso de no afiliación. Se añaden enlaces a GitHub, al CV (`/cv/`) y al proyecto de
-QA con agentes (decisión mía; razón: el público reclutador llega aquí desde el CV y LinkedIn y hoy
-el pie es un callejón sin salida).
+Se mantiene el aviso de no afiliación y la referencia a GitHub, como hoy. Sin enlaces al CV ni al
+proyecto de QA (decisión del dueño).
 
 ### Favicon y metadatos
 
