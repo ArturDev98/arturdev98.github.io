@@ -12,8 +12,11 @@ function pintar(l) {
   for (var i = 0; i < nodos.length; i++) {
     nodos[i].textContent = nodos[i].getAttribute('data-' + l);
   }
-  document.getElementById('b-es').classList.toggle('on', l === 'es');
-  document.getElementById('b-en').classList.toggle('on', l === 'en');
+  ['es', 'en'].forEach(function (x) {
+    var b = document.getElementById('b-' + x);
+    b.classList.toggle('on', l === x);
+    b.setAttribute('aria-pressed', String(l === x));
+  });
   correo();
   document.dispatchEvent(new CustomEvent('idioma', { detail: { idioma: l } }));
 }
@@ -78,8 +81,8 @@ if (navigator.share) {
 }
 
 
-// El navegador decide el idioma de partida; los botones mandan por encima.
-if ((navigator.language || 'es').slice(0, 2) !== 'es') pintar('en');
+// El idioma de partida ya lo aplicó el script en línea del HTML; los botones mandan por encima.
+if (document.documentElement.lang === 'en') pintar('en');
 else correo();
 
 /* ---------- demos ---------- */
@@ -89,11 +92,13 @@ function demo(nombre) { return document.querySelector('.demo[data-demo="' + nomb
 function crear(nombre, fn) {
   try { return fn(demo(nombre)); } catch (e) { return null; }
 }
-window.__demos = {
+var demos = {
   followapp: crear('followapp', crearDemoFollowapp),
   shield: crear('shield', crearDemoShield),
   cv: crear('cv', crearDemoCV),
 };
+// Solo las pruebas automatizadas (navigator.webdriver) ven los controles internos.
+if (navigator.webdriver) window.__demos = demos;
 
 // Fijar la sección solo cabe si la pantalla es alta: si no, el texto quedaría cortado mientras dura.
 export function modoDemos() {
@@ -103,24 +108,27 @@ export function modoDemos() {
 }
 
 export function montarDemos(modo) {
-  var nombres = Object.keys(window.__demos).filter(function (n) { return window.__demos[n]; });
+  var nombres = Object.keys(demos).filter(function (n) { return demos[n]; });
   if (modo === 'quieto' || !window.gsap || !window.ScrollTrigger) {
-    nombres.forEach(function (n) { window.__demos[n].progress(1); });
+    nombres.forEach(function (n) { demos[n].progress(1); });
     return;
   }
   window.gsap.registerPlugin(window.ScrollTrigger);
   nombres.forEach(function (n) {
-    var tl = window.__demos[n];
+    var tl = demos[n];
     // Fijada, una sección más alta que la pantalla escondería su CTA mientras dura.
     if (modo === 'escritorio' && document.getElementById(n).offsetHeight <= window.innerHeight) {
       window.ScrollTrigger.create({
         trigger: document.getElementById(n), pin: true, start: 'top top', end: '+=120%', scrub: 0.6, animation: tl,
+        // Las posiciones del cursor dependen del tamaño: se recalculan si cambia la ventana.
+        invalidateOnRefresh: true,
       });
     } else {
       tl.repeat(-1).repeatDelay(1.5);
       window.ScrollTrigger.create({
         trigger: demo(n), start: 'top 85%', end: 'bottom 10%',
         onToggle: function (st) { if (st.isActive) tl.play(); else tl.pause(); },
+        onRefresh: function () { tl.invalidate(); },
       });
     }
   });
@@ -139,8 +147,11 @@ var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function debeUsarWebGL() {
   if (reducido || !window.matchMedia('(pointer: fine)').matches || window.innerWidth < 900) return false;
-  var c = document.createElement('canvas');
-  return !!(c.getContext('webgl2') || c.getContext('webgl'));
+  var gl = document.createElement('canvas').getContext('webgl2') || document.createElement('canvas').getContext('webgl');
+  // El contexto de prueba se suelta ya: el navegador limita cuántos puede haber vivos.
+  var soltar = gl && gl.getExtension('WEBGL_lose_context');
+  if (soltar) soltar.loseContext();
+  return !!gl;
 }
 
 var portadaCSS = document.querySelector('.portada-css');
@@ -171,7 +182,8 @@ function arrancarWebGL() {
     var canvas = document.getElementById('portada-gl');
     canvas.hidden = false;
     try {
-      window.__portada = m.iniciarPortada(canvas);
+      var gl = m.iniciarPortada(canvas);
+      if (navigator.webdriver) window.__portada = gl;
       portadaCSS.hidden = true;
       portada.removeEventListener('pointermove', seguir);
       portada.removeEventListener('pointerdown', seguir);

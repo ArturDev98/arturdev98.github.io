@@ -57,3 +57,17 @@ test('render se pausa fuera de pantalla', async ({ page }, info) => {
   await page.waitForTimeout(500);
   expect(await page.evaluate(() => window.__portada.cuadros())).toBe(a);
 });
+
+test('con la pestaña oculta la portada deja de pedir cuadros', async ({ page }, info) => {
+  test.skip(info.project.name !== 'escritorio');
+  await page.goto('/');
+  await page.waitForFunction(() => window.__portada?.cuadros() > 5);
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'hidden', { configurable: true, get: () => true });
+    document.dispatchEvent(new Event('visibilitychange'));
+  });
+  await page.waitForTimeout(300);
+  const a = await page.evaluate(() => window.__portada.cuadros());
+  await page.waitForTimeout(500);
+  expect(await page.evaluate(() => window.__portada.cuadros())).toBe(a);
+});

@@ -53,6 +53,7 @@ export function crearDemoShield(raiz) {
   function fijarIntensidad() {
     raiz.style.setProperty('--desenfoque', rango.value + 'px');
     $('.sh-valor').textContent = rango.value + ' px';
+    rango.setAttribute('aria-valuetext', `${rango.value} px ${idioma() === 'en' ? 'of blur' : 'de desenfoque'}`);
   }
   rango.addEventListener('input', fijarIntensidad);
 
@@ -89,7 +90,7 @@ export function crearDemoShield(raiz) {
     filas.forEach((f, i) => f.classList.toggle('revelada-demo', !!tramo && tramo.fila === i));
   }
 
-  document.addEventListener('idioma', pintarTextos);
+  document.addEventListener('idioma', () => { pintarTextos(); fijarIntensidad(); });
   pintarTextos();
   fijarIntensidad();
   return tl;

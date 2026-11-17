@@ -94,8 +94,19 @@ function dibujarEscena(nitido, borroso, ancho, alto, dpr) {
 }
 
 export function iniciarPortada(canvas) {
-  const portada = canvas.closest('#portada');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'low-power' });
+  // Si algo falla a medio montar, el contexto no se queda vivo con la versión CSS ya de vuelta.
+  try {
+    return montarPortada(canvas, renderer);
+  } catch (e) {
+    renderer.dispose();
+    renderer.forceContextLoss();
+    throw e;
+  }
+}
+
+function montarPortada(canvas, renderer) {
+  const portada = canvas.closest('#portada');
   const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   renderer.setPixelRatio(dpr);
 
