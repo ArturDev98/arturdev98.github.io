@@ -13,12 +13,12 @@
 <meta property="og:url" content="https://arturdev98.github.io/">
 <meta property="og:title" content="FollowApp, Chat Privacy Shield y Best CV">
 <meta property="og:description" content="Dos extensiones de Chrome y una web para mejorar tu CV con IA: sin contraseña, sin cuenta y sin guardar tus datos.">
-<meta property="og:image" content="https://arturdev98.github.io/og.png?v=1">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="627">
+<meta property="og:image" content="https://arturdev98.github.io/og.png?v=2">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1254">
 <meta property="og:image:alt" content="Herramientas pequeñas que no te piden nada: FollowApp, Chat Privacy Shield y Best CV">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://arturdev98.github.io/og.png?v=1">
+<meta name="twitter:image" content="https://arturdev98.github.io/og.png?v=2">
 <script>
   // Antes de pintar: el aviso de móvil no debe aparecer tarde y empujar la página.
   if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (matchMedia('(pointer: coarse)').matches && innerWidth < 900)) document.documentElement.classList.add('es-movil');
@@ -31,8 +31,8 @@
 <header class="barra wrap">
   <p class="marca">arturdev98</p>
   <div class="langs" role="group" aria-label="Idioma">
-    <button type="button" id="b-es" class="on">ES</button>
-    <button type="button" id="b-en">EN</button>
+    <button type="button" id="b-es" class="on" aria-pressed="true">ES</button>
+    <button type="button" id="b-en" aria-pressed="false">EN</button>
   </div>
 </header>
 
@@ -130,6 +130,15 @@
   <p>github.com/arturdev98</p>
 </footer>
 
+<script>
+  // Antes de pintar: si main.js cambiaba el idioma al llegar, la portada saltaba (CLS en PageSpeed, que mide en inglés).
+  if ((navigator.language || 'es').slice(0, 2) !== 'es') {
+    document.documentElement.lang = 'en';
+    document.querySelectorAll('[data-en]').forEach(function (n) { n.textContent = n.getAttribute('data-en'); });
+    document.getElementById('b-es').classList.remove('on'); document.getElementById('b-es').setAttribute('aria-pressed', 'false');
+    document.getElementById('b-en').classList.add('on'); document.getElementById('b-en').setAttribute('aria-pressed', 'true');
+  }
+</script>
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
 <script type="module" src="assets/main.js"></script>

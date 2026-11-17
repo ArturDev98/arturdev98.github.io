@@ -7,7 +7,7 @@ test('favicon y metadatos', async ({ page, request }) => {
   expect((await request.get('/favicon.svg')).headers()['content-type']).toContain('image/svg+xml');
   expect((await request.get('/apple-touch-icon.png')).status()).toBe(200);
   expect((await request.get('/og.png')).status()).toBe(200);
-  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://arturdev98.github.io/og.png?v=1');
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://arturdev98.github.io/og.png?v=2');
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
 });
 
