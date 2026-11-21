@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 async function abrirYVerSiPideThree(page) {
   let vio = false;
   page.on('request', (r) => { if (r.url().includes('three.module')) vio = true; });
-  await page.goto('/');
+  await page.goto('/apps/');
   await page.waitForLoadState('networkidle');
   return vio;
 }
@@ -35,21 +35,21 @@ test('sin WebGL cae a CSS', async ({ page }, info) => {
     const o = HTMLCanvasElement.prototype.getContext;
     HTMLCanvasElement.prototype.getContext = function (t, ...a) { return /webgl/.test(t) ? null : o.call(this, t, ...a); };
   });
-  await page.goto('/');
+  await page.goto('/apps/');
   await page.waitForLoadState('networkidle');
   await expect(page.locator('.portada-css')).toBeVisible();
   await expect(page.locator('#portada-gl')).toBeHidden();
 });
 
 test('la escena de la portada cambia de idioma', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   await page.getByRole('button', { name: 'EN', exact: true }).click();
   await expect(page.locator('.portada-css .escena.nitida')).toContainText('unfollowed you');
 });
 
 test('render se pausa fuera de pantalla', async ({ page }, info) => {
   test.skip(info.project.name !== 'escritorio');
-  await page.goto('/');
+  await page.goto('/apps/');
   await page.waitForFunction(() => window.__portada?.cuadros() > 5);
   await page.locator('#cv').scrollIntoViewIfNeeded();
   await page.waitForTimeout(300);
@@ -60,7 +60,7 @@ test('render se pausa fuera de pantalla', async ({ page }, info) => {
 
 test('con la pestaña oculta la portada deja de pedir cuadros', async ({ page }, info) => {
   test.skip(info.project.name !== 'escritorio');
-  await page.goto('/');
+  await page.goto('/apps/');
   await page.waitForFunction(() => window.__portada?.cuadros() > 5);
   await page.evaluate(() => {
     Object.defineProperty(document, 'hidden', { configurable: true, get: () => true });

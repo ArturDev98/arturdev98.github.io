@@ -4,9 +4,11 @@
   "type": "module",
   "scripts": {
     "test": "playwright test",
-    "og": "node generar-og.mjs"
+    "og:apps": "node generar-og.mjs og-apps.html ../apps/og.png",
+    "og": "node generar-og.mjs og.html ../og.png"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
     "@playwright/test": "1.65.1"
   }
 }

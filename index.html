@@ -3,144 +3,406 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FollowApp, Chat Privacy Shield y Best CV</title>
-<meta name="description" content="Dos extensiones de Chrome y una web para mejorar tu CV con IA: sin contraseña, sin cuenta y sin guardar tus datos.">
+<script>
+  // Antes de pintar: los enlaces viejos de las apps se van a /apps/ y el idioma se decide aquí.
+  (function () {
+    var h = location.hash;
+    if (/^#(followapp|shield|movil|cv)$/.test(h)) { location.replace('/apps/' + location.search + h); return; }
+    var p = new URLSearchParams(location.search).get('lang');
+    var l = (p === 'en' || p === 'es') ? p : ((navigator.language || 'es').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+    var d = document.documentElement;
+    d.lang = l;
+    d.classList.add('i-' + l);
+    window.__idioma = l;
+    // El subrayado del h1 se decide aquí (sin GSAP) para que no parpadee: completo, vacío, dibujado.
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) { d.classList.add('dib'); setTimeout(function () { d.classList.add('dib-fin'); }, 3000); }
+    // Si el módulo no llega o falla, el visitante EN vuelve al ES estático con lang y botones coherentes.
+    window.__rescate = function () {
+      if (d.classList.contains('listo')) return;
+      d.lang = 'es'; d.classList.remove('i-en'); d.classList.add('i-es', 'listo');
+      var e = document.getElementById('b-en'), o = document.getElementById('b-es');
+      if (e && o) { e.setAttribute('aria-pressed', 'false'); e.classList.remove('on'); o.setAttribute('aria-pressed', 'true'); o.classList.add('on'); }
+    };
+    if (l === 'en') setTimeout(window.__rescate, 1200);
+  })();
+</script>
+<title>Arturo Isaza · QA Automation · SDET</title>
+<meta name="description" content="QA Automation / SDET en Bucaramanga, Colombia. Encuentro la falla, la corrijo en el código y lo demuestro con datos. Disponible de inmediato.">
 <meta name="theme-color" content="#0E161C">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<!-- WhatsApp y LinkedIn solo aceptan og:image absoluta; al cambiar la imagen, sube ?v= por su caché. -->
+<link rel="canonical" href="https://arturdev98.github.io/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://arturdev98.github.io/">
-<meta property="og:title" content="FollowApp, Chat Privacy Shield y Best CV">
-<meta property="og:description" content="Dos extensiones de Chrome y una web para mejorar tu CV con IA: sin contraseña, sin cuenta y sin guardar tus datos.">
-<meta property="og:image" content="https://arturdev98.github.io/og.png?v=2">
+<meta property="og:title" content="Arturo Isaza · QA Automation · SDET">
+<meta property="og:description" content="Encuentro la falla, la corrijo en el código y lo demuestro con datos.">
+<meta property="og:locale" content="es_CO">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://arturdev98.github.io/og.png?v=4">
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1254">
-<meta property="og:image:alt" content="Herramientas pequeñas que no te piden nada: FollowApp, Chat Privacy Shield y Best CV">
+<meta property="og:image:alt" content="Arturo Isaza, QA Automation · SDET: encuentro la falla, la corrijo en el código y lo demuestro con datos. Disponible de inmediato.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://arturdev98.github.io/og.png?v=2">
-<script>
-  // Antes de pintar: el aviso de móvil no debe aparecer tarde y empujar la página.
-  if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (matchMedia('(pointer: coarse)').matches && innerWidth < 900)) document.documentElement.classList.add('es-movil');
+<meta name="twitter:image" content="https://arturdev98.github.io/og.png?v=4">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Neiver Arturo Isaza Codezo","alternateName":"Arturo Isaza","jobTitle":"QA Automation · SDET","url":"https://arturdev98.github.io/","address":{"@type":"PostalAddress","addressLocality":"Bucaramanga","addressCountry":"CO"},"image":"https://arturdev98.github.io/cv/foto.webp","sameAs":["https://github.com/ArturDev98","https://www.linkedin.com/in/arturo-isaza-qa","https://arturdev98.github.io/cv/"]}
 </script>
-<link rel="preload" href="fonts/archivo-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/sitio.css">
+<link rel="preload" href="/fonts/oxanium-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/estilos.css">
+<link rel="modulepreload" href="/assets/movimiento.js">
+<link rel="modulepreload" href="/assets/brillo.js">
+<link rel="modulepreload" href="/assets/fondo-css.js">
+<script src="/vendor/gsap.min.js" defer></script>
+<script src="/vendor/ScrollTrigger.min.js" defer></script>
+<script type="module" src="/assets/sitio.js" onerror="window.__rescate &amp;&amp; window.__rescate()"></script>
 </head>
 <body>
+<a class="salto" href="#contenido" data-es="Saltar al contenido" data-en="Skip to content">Saltar al contenido</a>
 
-<header class="barra wrap">
+<header class="barra">
   <p class="marca">arturdev98</p>
-  <div class="langs" role="group" aria-label="Idioma">
-    <button type="button" id="b-es" class="on" aria-pressed="true">ES</button>
-    <button type="button" id="b-en" aria-pressed="false">EN</button>
-  </div>
+  <nav class="barra-nav" aria-label="Sitio">
+    <a href="/apps/">Apps</a>
+    <a href="/cv/">CV</a>
+    <div class="langs" role="group" aria-label="Idioma">
+      <button type="button" id="b-es" class="on" aria-pressed="true">ES</button>
+      <button type="button" id="b-en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
 </header>
 
-<main>
+<main id="contenido">
 
-  <section id="portada" class="portada">
-    <div class="portada-css" aria-hidden="true">
-      <span class="mancha m1"></span><span class="mancha m2"></span><span class="mancha m3"></span>
-      <div class="escena borrosa"></div>
-      <div class="vidrio"></div>
-      <div class="escena nitida"></div>
-    </div>
-    <canvas id="portada-gl" hidden aria-hidden="true"></canvas>
-    <div class="portada-texto wrap">
-      <h1 data-es="Herramientas pequeñas que no te piden nada" data-en="Small tools that ask you for nothing">Herramientas pequeñas que no te piden nada</h1>
-      <p class="tesis" data-es="Ni contraseña ni cuenta. Las extensiones trabajan dentro de tu navegador y tus datos se quedan ahí; la web de CVs procesa el tuyo y no lo guarda." data-en="No password, no account. The extensions work inside your browser and your data stays there; the CV site processes yours and does not keep it.">Ni contraseña ni cuenta. Las extensiones trabajan dentro de tu navegador y tus datos se quedan ahí; la web de CVs procesa el tuyo y no lo guarda.</p>
-      <ul class="sin">
-        <li data-es="sin contraseña" data-en="no password">sin contraseña</li>
-        <li data-es="sin cuenta" data-en="no account">sin cuenta</li>
-        <li data-es="sin guardar tus datos" data-en="nothing stored">sin guardar tus datos</li>
-        <li data-es="sin analítica" data-en="no analytics">sin analítica</li>
+  <section id="inicio" class="inicio" aria-labelledby="h-inicio">
+    <div class="fondo" aria-hidden="true"></div>
+    <div class="inicio-cont">
+      <p class="kicker">QA Automation · SDET · Bucaramanga, Colombia</p>
+      <h1 id="h-inicio"><span data-es="Encuentro " data-en="I find ">Encuentro </span><span class="sub sub-falla" data-es="la falla" data-en="the bug">la falla</span><span data-es=", la corrijo en el código y lo demuestro " data-en=", fix it in the code and prove it ">, la corrijo en el código y lo demuestro </span><span class="sub sub-datos" data-es="con datos" data-en="with data">con datos</span><span>.</span></h1>
+      <p class="disp"><span class="disp-punto" aria-hidden="true"></span><span data-es="Disponible de inmediato" data-en="Available immediately">Disponible de inmediato</span></p>
+
+      <ul class="cifras-hero">
+        <li>
+          <p class="valor">89</p>
+          <p class="expl" data-es="casos de soporte resueltos corrigiendo yo mismo el código" data-en="support cases solved by fixing the code myself">casos de soporte resueltos corrigiendo yo mismo el código</p>
+        </li>
+        <li>
+          <p class="valor">2×</p>
+          <p class="expl" data-es="más rápido el proceso más lento de la plataforma (4,9 → 2,2 min)" data-en="faster: the platform's slowest process (4.9 → 2.2 min)">más rápido el proceso más lento de la plataforma (4,9 → 2,2 min)</p>
+        </li>
+        <li>
+          <p class="valor">~1 h</p>
+          <p class="expl" data-es="de tarea nueva a código probado, con agentes de IA" data-en="from new task to tested code, with AI agents">de tarea nueva a código probado, con agentes de IA</p>
+        </li>
       </ul>
-    </div>
-  </section>
 
-  <section class="movil wrap" id="movil">
-    <div class="movil-caja">
-      <h2 data-es="Estás en el móvil" data-en="You are on a phone">Estás en el móvil</h2>
-      <p data-es="Las extensiones de Chrome solo se instalan en un ordenador. Guárdate este enlace y ábrelo cuando estés delante de uno. Best CV sí funciona desde el móvil." data-en="Chrome extensions can only be installed on a computer. Save this link and open it when you are at one. Best CV does work on your phone.">Las extensiones de Chrome solo se instalan en un ordenador. Guárdate este enlace y ábrelo cuando estés delante de uno. Best CV sí funciona desde el móvil.</p>
       <div class="acciones">
-        <button type="button" id="compartir" hidden data-es="Compartir" data-en="Share">Compartir</button>
-        <button type="button" id="copiar" data-es="Copiar enlace" data-en="Copy link">Copiar enlace</button>
-        <a id="correo" href="#" data-es="Enviármelo por correo" data-en="Email it to myself">Enviármelo por correo</a>
+        <a class="boton boton-fuerte" href="#proyectos" data-es="Ver proyectos" data-en="See projects">Ver proyectos</a>
+        <a class="boton" href="/cv/">CV</a>
+        <a class="chip-apps" href="/apps/"><span data-es="¿Buscas FollowApp o Chat Privacy Shield?" data-en="Looking for FollowApp or Chat Privacy Shield?">¿Buscas FollowApp o Chat Privacy Shield?</span> <span class="fl fr" aria-hidden="true">→</span> <strong>Apps</strong></a>
       </div>
-      <p class="dicho" id="dicho" role="status" hidden></p>
     </div>
+    <a class="ver-mas" href="#sobre-mi"><span data-es="Ver más" data-en="See more">Ver más</span><svg class="ver-mas-f" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 2v10M3 8l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
   </section>
 
-  <section class="app wrap" id="followapp">
-    <div class="app-texto">
-      <h2 data-es="Quién te dejó de seguir" data-en="Who unfollowed you">Quién te dejó de seguir</h2>
-      <p class="app-nombre"><b>FollowApp</b> <span data-es="extensión de Chrome para Instagram" data-en="Chrome extension for Instagram">extensión de Chrome para Instagram</span></p>
-      <p class="que" data-es="Instagram no te avisa cuando alguien se va. FollowApp lleva la cuenta por ti, y comprueba si esa cuenta sigue existiendo antes de decirte nada: una cuenta suspendida desaparece igual que alguien que se va, y no es lo mismo." data-en="Instagram never tells you when someone leaves. FollowApp keeps track for you, and checks whether that account still exists before telling you anything: a suspended account disappears just like someone who left, and those are not the same thing.">Instagram no te avisa cuando alguien se va. FollowApp lleva la cuenta por ti, y comprueba si esa cuenta sigue existiendo antes de decirte nada: una cuenta suspendida desaparece igual que alguien que se va, y no es lo mismo.</p>
-      <ul>
-        <li data-es="Quién se fue y quién llegó, con su foto y cuándo" data-en="Who left and who arrived, with their picture and when">Quién se fue y quién llegó, con su foto y cuándo</li>
-        <li data-es="Quién no te sigue de vuelta" data-en="Who does not follow you back">Quién no te sigue de vuelta</li>
-        <li data-es="Revisa sola en segundo plano, sin pedir el ZIP de datos a Meta" data-en="Checks on its own in the background, no data export from Meta">Revisa sola en segundo plano, sin pedir el ZIP de datos a Meta</li>
-      </ul>
-    </div>
-    <div class="demo" data-demo="followapp"></div>
-    <div class="app-pie">
-      <a class="cta" href="https://chromewebstore.google.com/detail/nffhilcgedjjoednagidnimjnembkdho"><span data-es="Añadir a Chrome" data-en="Add to Chrome">Añadir a Chrome</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/></svg></a>
-      <a class="mas" href="https://arturdev98.github.io/followapp/" data-es="Política de privacidad" data-en="Privacy policy">Política de privacidad</a>
-    </div>
-  </section>
+  <div class="cuerpo">
+    <aside class="lateral">
+      <div class="ident">
+        <p class="nombre">Arturo Isaza</p>
+        <p class="rol">QA Automation · SDET</p>
+      </div>
+      <details class="menu">
+        <summary><span class="ico" aria-hidden="true"><i></i><i></i><i></i></span><span data-es="Menú" data-en="Menu">Menú</span></summary>
+        <div class="menu-cuerpo" id="menu-panel">
+          <nav aria-label="Suites">
+            <ol class="suites">
+              <li><a href="#sobre-mi"><span class="punto" data-estado="pendiente" aria-hidden="true"></span><span class="num">01</span><span data-es="Sobre mí" data-en="About">Sobre mí</span></a></li>
+              <li><a href="#experiencia"><span class="punto" data-estado="pendiente" aria-hidden="true"></span><span class="num">02</span><span data-es="Experiencia" data-en="Experience">Experiencia</span></a></li>
+              <li><a href="#proyectos"><span class="punto" data-estado="pendiente" aria-hidden="true"></span><span class="num">03</span><span data-es="Proyectos" data-en="Projects">Proyectos</span></a></li>
+              <li><a href="#mas-proyectos"><span class="punto" data-estado="pendiente" aria-hidden="true"></span><span class="num">04</span><span data-es="Más proyectos" data-en="More projects">Más proyectos</span></a></li>
+              <li><a href="#herramientas"><span class="punto" data-estado="pendiente" aria-hidden="true"></span><span class="num">05</span><span data-es="Herramientas" data-en="Tools">Herramientas</span></a></li>
+              <li><a href="#contacto"><span class="punto" data-estado="pendiente" aria-hidden="true"></span><span class="num">06</span><span data-es="Contacto" data-en="Contact">Contacto</span></a></li>
+            </ol>
+          </nav>
+          <p class="contador"><span class="c-n">0</span>/6 suites · <span class="c-f">0</span> <span data-es="fallas" data-en="failures">fallas</span></p>
+          <p class="redes">
+            <a href="https://github.com/arturdev98">GitHub</a>
+            <a href="https://www.linkedin.com/in/arturo-isaza-qa">LinkedIn</a>
+            <a href="/cv/">CV</a>
+          </p>
+        </div>
+      </details>
+    </aside>
 
-  <section class="app wrap" id="shield">
-    <div class="app-texto">
-      <h2 data-es="Que nadie lea por encima del hombro" data-en="So nobody reads over your shoulder">Que nadie lea por encima del hombro</h2>
-      <p class="app-nombre"><b>Chat Privacy Shield</b> <span data-es="extensión de Chrome para WhatsApp Web" data-en="Chrome extension for WhatsApp Web">extensión de Chrome para WhatsApp Web</span></p>
-      <p class="que" data-es="Difumina la lista de chats, los nombres, las fotos y las imágenes compartidas en WhatsApp Web. Pasas el ratón por encima y se revela; lo apartas y vuelve a taparse." data-en="Blurs your chat list, names, photos and shared images on WhatsApp Web. Hover to reveal; move away and it covers itself again.">Difumina la lista de chats, los nombres, las fotos y las imágenes compartidas en WhatsApp Web. Pasas el ratón por encima y se revela; lo apartas y vuelve a taparse.</p>
-      <ul>
-        <li data-es="Oculta nombres, fotos y hasta lo que estás escribiendo" data-en="Hides names, photos and even what you are typing">Oculta nombres, fotos y hasta lo que estás escribiendo</li>
-        <li data-es="Se revela al pasar el ratón o con un atajo de teclado" data-en="Reveals on hover or with a keyboard shortcut">Se revela al pasar el ratón o con un atajo de teclado</li>
-        <li data-es="Los contadores de no leídos siguen visibles" data-en="Unread counters stay visible">Los contadores de no leídos siguen visibles</li>
-      </ul>
-    </div>
-    <div class="demo" data-demo="shield"></div>
-    <div class="app-pie">
-      <a class="cta" href="https://chromewebstore.google.com/detail/chat-privacy-shield/gillcdhclnchpkbifcnipfckmapodjpm"><span data-es="Añadir a Chrome" data-en="Add to Chrome">Añadir a Chrome</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/></svg></a>
-    </div>
-  </section>
+    <div class="suites-cont">
 
-  <section class="app wrap" id="cv">
-    <div class="app-texto">
-      <h2 data-es="Tu CV, reescrito sin inventar nada" data-en="Your CV, rewritten without making anything up">Tu CV, reescrito sin inventar nada</h2>
-      <p class="app-nombre"><b>Best CV</b> <span data-es="web con IA, también en el móvil" data-en="AI web app, works on your phone too">web con IA, también en el móvil</span></p>
-      <p class="que" data-es="Subes tu CV, dices qué quieres destacar o pegas la vacante, y la IA lo reescribe y le da un diseño nuevo. Si le faltan datos para un logro, te pregunta en vez de inventarlo." data-en="Upload your CV, say what you want to highlight or paste the job posting, and the AI rewrites it with a fresh design. If an achievement is missing details, it asks you instead of making them up.">Subes tu CV, dices qué quieres destacar o pegas la vacante, y la IA lo reescribe y le da un diseño nuevo. Si le faltan datos para un logro, te pregunta en vez de inventarlo.</p>
-      <ul>
-        <li data-es="Lo adapta a una vacante y te dice qué requisitos te faltan" data-en="Tailors it to a job posting and tells you which requirements are missing">Lo adapta a una vacante y te dice qué requisitos te faltan</li>
-        <li data-es="Roast de tu CV: puntaje honesto, chistes y un arreglo serio para cada uno" data-en="CV roast: an honest score, jokes and a serious fix for each one">Roast de tu CV: puntaje honesto, chistes y un arreglo serio para cada uno</li>
-        <li data-es="No guarda tu CV: el resultado queda en tu navegador" data-en="Does not keep your CV: the result stays in your browser">No guarda tu CV: el resultado queda en tu navegador</li>
-      </ul>
-    </div>
-    <div class="demo" data-demo="cv"></div>
-    <div class="app-pie">
-      <a class="cta" href="https://best-cv-neon.vercel.app"><span data-es="Abrir Best CV" data-en="Open Best CV">Abrir Best CV</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/></svg></a>
-    </div>
-  </section>
+      <section id="sobre-mi" class="suite" aria-labelledby="h-sobre">
+        <p class="etq" data-revela><span class="etq-n">01</span> <span data-es="Sobre mí" data-en="About">Sobre mí</span></p>
+        <h2 id="h-sobre" data-revela data-es="Sigo el error hasta la línea que lo causa." data-en="I follow the bug to the line that causes it.">Sigo el error hasta la línea que lo causa.</h2>
+        <div class="sobre" data-revela>
+          <div class="sobre-texto">
+            <p data-es="QA con más de 5 años probando software web, móvil y de escritorio para empresas de crédito y seguros. No me quedo en reportar el error: lo sigo hasta la línea de código que lo causa, lo corrijo y mido que quedó resuelto. Cuando una tarea se repite, la automatizo, muchas veces con agentes de IA (Claude Code)." data-en="QA engineer with 5+ years testing web, mobile and desktop software for lending and insurance companies. I don't stop at reporting a bug: I follow it to the line of code that causes it, fix it and measure that it's solved. When a task repeats, I automate it, often with AI agents (Claude Code).">QA con más de 5 años probando software web, móvil y de escritorio para empresas de crédito y seguros. No me quedo en reportar el error: lo sigo hasta la línea de código que lo causa, lo corrijo y mido que quedó resuelto. Cuando una tarea se repite, la automatizo, muchas veces con agentes de IA (Claude Code).</p>
+            <p data-es="De mayo de 2023 a noviembre de 2026 trabajé en HexaSolutions para Crezcamos, una fintech que da microcréditos. Busco un rol de QA Automation / SDET en Bucaramanga, híbrido o remoto. Disponible de inmediato." data-en="From May 2023 to November 2026 I worked at HexaSolutions for Crezcamos, a microcredit fintech. Looking for a QA Automation / SDET role, remote or hybrid (based in Bucaramanga, Colombia). Available immediately.">De mayo de 2023 a noviembre de 2026 trabajé en HexaSolutions para Crezcamos, una fintech que da microcréditos. Busco un rol de QA Automation / SDET en Bucaramanga, híbrido o remoto. Disponible de inmediato.</p>
+            <p class="idiomas-l" data-es="Español nativo · Inglés B1" data-en="Spanish native · English B1">Español nativo · Inglés B1</p>
+          </div>
+          <img class="foto" src="/cv/foto.webp" width="360" height="360" alt="Arturo Isaza" decoding="async">
+        </div>
+      </section>
 
+      <section id="experiencia" class="suite" aria-labelledby="h-exp">
+        <p class="etq" data-revela><span class="etq-n">02</span> <span data-es="Experiencia" data-en="Experience">Experiencia</span></p>
+        <h2 id="h-exp" data-revela data-es="Más de 5 años probando software." data-en="5+ years testing software.">Más de 5 años probando software.</h2>
+        <div class="tiempo">
+          <span class="linea" aria-hidden="true"></span>
+
+          <article class="paso" data-revela>
+            <span class="nodo" aria-hidden="true"></span>
+            <p class="fechas" data-es="may 2023 – nov 2026" data-en="May 2023 – Nov 2026">may 2023 – nov 2026</p>
+            <h3 data-es="Analista de Pruebas QA" data-en="QA Analyst">Analista de Pruebas QA</h3>
+            <p class="empresa">HexaSolutions · <span data-es="Bucaramanga" data-en="Bucaramanga, Colombia">Bucaramanga</span></p>
+            <p class="cliente" data-es="Cliente: Crezcamos, fintech de microcrédito (sistema en Java · Spring Boot, web en Angular, app móvil en Ionic)." data-en="Client: Crezcamos, a microcredit fintech (system in Java · Spring Boot, Angular web, Ionic mobile app).">Cliente: Crezcamos, fintech de microcrédito (sistema en Java · Spring Boot, web en Angular, app móvil en Ionic).</p>
+            <ul>
+              <li data-es="Resolví 89 casos de soporte corrigiendo yo mismo el código: 412 cambios (commits) en 16 repositorios, entre sep. 2025 y nov. 2026." data-en="Solved 89 support cases by fixing the code myself: 412 changes (commits) across 16 repositories, Sep 2025 – Nov 2026.">Resolví 89 casos de soporte corrigiendo yo mismo el código: 412 cambios (commits) en 16 repositorios, entre sep. 2025 y nov. 2026.</li>
+              <li data-es="El proceso más lento de la plataforma, guardar la consulta a centrales de riesgo de un cliente, pasó de 4,9 a 2,2 minutos y dejó de cortarse por tiempo de espera: eliminé 2.551 llamadas repetidas entre servicios y bajé las consultas a la base de datos de 64.800 a unas 230." data-en="The platform's slowest process, saving a customer's credit-check data, went from 4.9 to 2.2 minutes and stopped being cut off by a timeout: I removed 2,551 repeated calls between services and cut database queries from 64,800 to about 230.">El proceso más lento de la plataforma, guardar la consulta a centrales de riesgo de un cliente, pasó de 4,9 a 2,2 minutos y dejó de cortarse por tiempo de espera: eliminé 2.551 llamadas repetidas entre servicios y bajé las consultas a la base de datos de 64.800 a unas 230.</li>
+              <li data-es="La actualización completa del buscador interno (Elasticsearch) quedó entre 2,2 y 2,9 veces más rápida, comprobando que no se perdiera ningún registro." data-en="The full rebuild of the internal search (Elasticsearch) became 2.2 to 2.9 times faster, verifying that no record was lost.">La actualización completa del buscador interno (Elasticsearch) quedó entre 2,2 y 2,9 veces más rápida, comprobando que no se perdiera ningún registro.</li>
+              <li data-es="Tres servicios se caían por falta de memoria: crucé seis registros (logs), encontré la causa en el código y salieron tres correcciones." data-en="Three services kept crashing from running out of memory: I cross-checked six logs, found the cause in the code and shipped three fixes.">Tres servicios se caían por falta de memoria: crucé seis registros (logs), encontré la causa en el código y salieron tres correcciones.</li>
+              <li data-es="Flujos con agentes de IA (Claude Code) que llevan una historia de usuario a código probado y listo para QA en cerca de una hora (59–67 min medidos)." data-en="AI agent workflows (Claude Code) that take a user story to tested code, ready for QA, in about an hour (59–67 measured minutes).">Flujos con agentes de IA (Claude Code) que llevan una historia de usuario a código probado y listo para QA en cerca de una hora (59–67 min medidos).</li>
+            </ul>
+          </article>
+
+          <article class="paso" data-revela>
+            <span class="nodo" aria-hidden="true"></span>
+            <p class="fechas" data-es="ago 2022 – may 2023" data-en="Aug 2022 – May 2023">ago 2022 – may 2023</p>
+            <h3 data-es="Analista de Pruebas QA" data-en="QA Analyst">Analista de Pruebas QA</h3>
+            <p class="empresa">Avances Software</p>
+            <ul>
+              <li data-es="Probé aplicaciones web y de escritorio a partir del análisis de las historias de usuario; reporté defectos, validé sus correcciones y documenté los casos ejecutados." data-en="Tested web and desktop applications based on user-story analysis; reported defects, verified their fixes and documented the executed cases.">Probé aplicaciones web y de escritorio a partir del análisis de las historias de usuario; reporté defectos, validé sus correcciones y documenté los casos ejecutados.</li>
+            </ul>
+          </article>
+
+          <article class="paso" data-revela>
+            <span class="nodo" aria-hidden="true"></span>
+            <p class="fechas" data-es="jul 2021 – ago 2022" data-en="Jul 2021 – Aug 2022">jul 2021 – ago 2022</p>
+            <h3>QA Tester</h3>
+            <p class="empresa" data-es="Sistemas y Computadores S.A. · proyecto SBS Seguros · Floridablanca" data-en="Sistemas y Computadores S.A. · SBS Seguros (insurance) project · Floridablanca, Colombia">Sistemas y Computadores S.A. · proyecto SBS Seguros · Floridablanca</p>
+            <ul>
+              <li data-es="Implementé y mantuve el proceso de QA del proyecto: casos de prueba desde requisitos, pruebas manuales y automatizadas, y seguimiento de incidencias con desarrollo hasta su cierre." data-en="Set up and ran the project's QA process: test cases from requirements, manual and automated testing, and incident follow-up with development until closure.">Implementé y mantuve el proceso de QA del proyecto: casos de prueba desde requisitos, pruebas manuales y automatizadas, y seguimiento de incidencias con desarrollo hasta su cierre.</li>
+            </ul>
+          </article>
+
+          <article class="paso paso-edu" data-revela>
+            <span class="nodo" aria-hidden="true"></span>
+            <p class="fechas" data-es="en curso · esperado mayo 2027" data-en="in progress · expected May 2027">en curso · esperado mayo 2027</p>
+            <h3 data-es="Ingeniería de Sistemas" data-en="B.Eng. Systems Engineering">Ingeniería de Sistemas</h3>
+            <p class="empresa" data-es="CUN, en curso" data-en="CUN, in progress">CUN, en curso</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="proyectos" class="suite" aria-labelledby="h-proy">
+        <p class="etq" data-revela><span class="etq-n">03</span> <span data-es="Proyectos" data-en="Projects">Proyectos</span></p>
+        <h2 id="h-proy" data-revela data-es="Cuatro proyectos que puedes abrir." data-en="Four projects you can open.">Cuatro proyectos que puedes abrir.</h2>
+
+        <article data-revela class="proyecto" data-tono="cian">
+          <header class="proy-cab">
+            <span class="proy-n">01</span>
+            <span class="proy-nombre">ai-automatization</span>
+            <span class="proy-estado" data-es="✓ CI en verde" data-en="✓ CI passing">✓ CI en verde</span>
+          </header>
+          <figure class="medio medio-video">
+            <video data-repeticion muted playsinline loop preload="none" controls poster="media/repeticion.webp" width="960" height="620" aria-labelledby="pie-video">
+              <source src="media/repeticion.webm" type="video/webm">
+              <source src="media/repeticion.mp4" type="video/mp4">
+            </video>
+            <figcaption id="pie-video" class="solo-lectores" data-es="Repetición de la corrida real: los cuatro agentes procesan el requisito REQ-004 y la última corrida de pruebas termina en verde, sin fallas." data-en="Replay of the real run: the four agents process requirement REQ-004 and the last test run ends green, with no failures.">Repetición de la corrida real: los cuatro agentes procesan el requisito REQ-004 y la última corrida de pruebas termina en verde, sin fallas.</figcaption>
+          </figure>
+          <div class="pipeline" data-demo="pipeline" aria-hidden="true">
+            <div class="pl-pista"><i class="pl-relleno"></i></div>
+            <ol class="pl-nodos">
+              <li class="pl-nodo"><span class="pl-marca"><i class="pl-hecho"></i><i class="pl-curso"></i></span><span class="pl-txt">Extractor</span></li>
+              <li class="pl-nodo"><span class="pl-marca"><i class="pl-hecho"></i><i class="pl-curso"></i></span><span class="pl-txt">Planner</span></li>
+              <li class="pl-nodo pl-puerta"><span class="pl-marca"><i class="pl-hecho"></i><i class="pl-curso"></i></span><span class="pl-txt" data-es="revisión humana" data-en="human review">revisión humana</span></li>
+              <li class="pl-nodo"><span class="pl-marca"><i class="pl-hecho"></i><i class="pl-curso"></i></span><span class="pl-txt">Automator</span></li>
+              <li class="pl-nodo"><span class="pl-marca"><i class="pl-hecho"></i><i class="pl-curso"></i></span><span class="pl-txt">Reporter</span></li>
+            </ol>
+            <div class="pl-carril"><i class="pl-ficha"></i></div>
+            <span class="pl-aprueba" data-es="aprueba" data-en="approves">aprueba</span>
+          </div>
+          <div class="proy-cuerpo">
+            <p class="proy-desc" data-es="Un requisito entra y sale como plan de pruebas, pruebas de Playwright, reporte y matriz de trazabilidad. Cuatro agentes de Claude Code (Extractor, Planner, Automator, Reporter), cada uno con el modelo que le toca; nada se automatiza hasta que una persona aprueba el plan." data-en="A requirement goes in and comes out as a test plan, Playwright tests, a report and a traceability matrix. Four Claude Code agents (Extractor, Planner, Automator, Reporter), each with the model it needs; nothing is automated until a person approves the plan.">Un requisito entra y sale como plan de pruebas, pruebas de Playwright, reporte y matriz de trazabilidad. Cuatro agentes de Claude Code (Extractor, Planner, Automator, Reporter), cada uno con el modelo que le toca; nada se automatiza hasta que una persona aprueba el plan.</p>
+            <dl class="cifras">
+              <div><dt>4</dt><dd data-es="requisitos" data-en="requirements">requisitos</dd></div>
+              <div><dt>27</dt><dd data-es="criterios" data-en="criteria">criterios</dd></div>
+              <div><dt>19</dt><dd data-es="bugs documentados" data-en="documented bugs">bugs documentados</dd></div>
+              <div><dt>CI</dt><dd data-es="en cada cambio" data-en="on every change">en cada cambio</dd></div>
+            </dl>
+            <p class="stack">Playwright · Claude Code · GitHub Actions</p>
+            <p class="enlaces">
+              <a href="https://arturdev98.github.io/ai-automatization/"><span data-es="Panel en vivo" data-en="Live dashboard">Panel en vivo</span> <span class="fl" aria-hidden="true">↗</span></a>
+              <a href="https://github.com/ArturDev98/ai-automatization"><span data-es="Repositorio" data-en="Repository">Repositorio</span> <span class="fl" aria-hidden="true">↗</span></a>
+            </p>
+          </div>
+        </article>
+
+        <article data-revela class="proyecto" data-tono="ambar">
+          <header class="proy-cab">
+            <span class="proy-n">02</span>
+            <span class="proy-nombre">helpdesk-triage-agent</span>
+            <span class="proy-estado" data-es="✓ en producción (versión interna)" data-en="✓ in production (internal version)">✓ en producción (versión interna)</span>
+          </header>
+          <div class="medio medio-4-3" data-demo="triage" aria-hidden="true"><span class="medio-vacio">triage --dry-run</span></div>
+          <div class="proy-cuerpo">
+            <p class="proy-desc" data-es="Agente de triage para mesas de ayuda: clasifica tickets con Claude, reconoce problemas conocidos y apunta a la causa probable en el código. Es la versión pública, reconstruida desde cero con datos ficticios; tiene modo demo sin API (python -m triage --dry-run)." data-en="Triage agent for help desks: it classifies tickets with Claude, recognizes known problems and points to the probable cause in the code. This is the public version, rebuilt from scratch with fictional data; it has a no-API demo mode (python -m triage --dry-run).">Agente de triage para mesas de ayuda: clasifica tickets con Claude, reconoce problemas conocidos y apunta a la causa probable en el código. Es la versión pública, reconstruida desde cero con datos ficticios; tiene modo demo sin API (python -m triage --dry-run).</p>
+            <dl class="cifras">
+              <div><dt>2 h → 15 min</dt><dd data-es="de hasta 2 horas a hasta 15 minutos de revisión por ticket (versión interna en producción, privada)" data-en="from up to 2 hours to up to 15 minutes of review per ticket (internal version in production, private)">de hasta 2 horas a hasta 15 minutos de revisión por ticket (versión interna en producción, privada)</dd></div>
+            </dl>
+            <p class="stack">Python · Claude API · SQLite</p>
+            <p class="enlaces">
+              <a href="https://github.com/ArturDev98/helpdesk-triage-agent"><span data-es="Repositorio" data-en="Repository">Repositorio</span> <span class="fl" aria-hidden="true">↗</span></a>
+            </p>
+          </div>
+        </article>
+
+        <article data-revela class="proyecto" data-tono="verde">
+          <header class="proy-cab">
+            <span class="proy-n">03</span>
+            <span class="proy-nombre">restful-booker-api-tests</span>
+            <span class="proy-estado" data-es="✓ CI en verde" data-en="✓ CI passing">✓ CI en verde</span>
+          </header>
+          <div class="medio medio-4-3" data-demo="pytest" aria-hidden="true"><span class="medio-vacio">pytest tests/ -v</span></div>
+          <div class="proy-cuerpo">
+            <p class="proy-desc" data-es="Pruebas de la API pública restful-booker con pytest + requests + jsonschema: exploración, plan de 30 casos, 16 hallazgos documentados con su severidad y una página del flujo." data-en="Tests for the public restful-booker API with pytest + requests + jsonschema: exploration, a 30-case plan, 16 documented findings with their severity and a page showing the flow.">Pruebas de la API pública restful-booker con pytest + requests + jsonschema: exploración, plan de 30 casos, 16 hallazgos documentados con su severidad y una página del flujo.</p>
+            <dl class="cifras">
+              <div><dt>30</dt><dd data-es="casos" data-en="cases">casos</dd></div>
+              <div><dt>16</dt><dd data-es="hallazgos" data-en="findings">hallazgos</dd></div>
+            </dl>
+            <p class="stack">pytest · requests · jsonschema</p>
+            <p class="enlaces">
+              <a href="https://github.com/ArturDev98/restful-booker-api-tests"><span data-es="Repositorio" data-en="Repository">Repositorio</span> <span class="fl" aria-hidden="true">↗</span></a>
+              <a href="https://arturdev98.github.io/restful-booker-api-tests/"><span data-es="Página del flujo" data-en="Flow page">Página del flujo</span> <span class="fl" aria-hidden="true">↗</span></a>
+            </p>
+          </div>
+        </article>
+
+        <article data-revela class="proyecto" data-tono="verde">
+          <header class="proy-cab">
+            <span class="proy-n">04</span>
+            <span class="proy-nombre">Chat Privacy Shield</span>
+            <span class="proy-estado" data-es="✓ publicada en la Chrome Web Store" data-en="✓ live on the Chrome Web Store">✓ publicada en la Chrome Web Store</span>
+          </header>
+          <div class="medio medio-4-3" data-demo="shield" aria-hidden="true"><span class="medio-vacio">Chat Privacy Shield</span></div>
+          <div class="proy-cuerpo">
+            <p class="proy-desc" data-es="Extensión de Chrome que difumina chats, nombres y fotos en WhatsApp Web y Telegram Web; disponible en 6 idiomas." data-en="Chrome extension that blurs chats, names and photos on WhatsApp Web and Telegram Web; available in 6 languages.">Extensión de Chrome que difumina chats, nombres y fotos en WhatsApp Web y Telegram Web; disponible en 6 idiomas.</p>
+            <p class="stack">JavaScript · Chrome</p>
+            <p class="enlaces">
+              <a href="https://chromewebstore.google.com/detail/chat-privacy-shield/gillcdhclnchpkbifcnipfckmapodjpm">Chrome Web Store <span class="fl" aria-hidden="true">↗</span></a>
+              <a href="/apps/#shield"><span data-es="Demo en Apps" data-en="Demo in Apps">Demo en Apps</span> <span class="fl fr" aria-hidden="true">→</span></a>
+              <a href="https://github.com/ArturDev98/Chat-Privacy-Shield"><span data-es="Repositorio" data-en="Repository">Repositorio</span> <span class="fl" aria-hidden="true">↗</span></a>
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section id="mas-proyectos" class="suite" aria-labelledby="h-mas">
+        <p class="etq" data-revela><span class="etq-n">04</span> <span data-es="Más proyectos" data-en="More projects">Más proyectos</span></p>
+        <h2 id="h-mas" data-revela data-es="Más cosas que construí." data-en="More things I built.">Más cosas que construí.</h2>
+        <ul class="mas">
+          <li class="ficha" data-revela>
+            <h3>FollowApp</h3>
+            <p class="ficha-desc" data-es="Extensión que avisa quién te dejó de seguir en Instagram y distingue una cuenta suspendida de alguien que se fue." data-en="Extension that tells you who unfollowed you on Instagram and tells a suspended account apart from someone who left.">Extensión que avisa quién te dejó de seguir en Instagram y distingue una cuenta suspendida de alguien que se fue.</p>
+            <p class="stack">TypeScript · Chrome MV3</p>
+            <p class="enlaces"><a href="/apps/#followapp"><span data-es="Demo en Apps" data-en="Demo in Apps">Demo en Apps</span> <span class="fl fr" aria-hidden="true">→</span></a> <a href="https://chromewebstore.google.com/detail/nffhilcgedjjoednagidnimjnembkdho">Chrome Web Store <span class="fl" aria-hidden="true">↗</span></a></p>
+          </li>
+          <li class="ficha" data-revela>
+            <h3>Best CV</h3>
+            <p class="ficha-desc" data-es="Web que reescribe un CV con IA sin inventar datos: si a un logro le falta información, pregunta." data-en="Web app that rewrites a CV with AI without making anything up: if an achievement lacks detail, it asks.">Web que reescribe un CV con IA sin inventar datos: si a un logro le falta información, pregunta.</p>
+            <p class="stack" data-es="Next.js · Claude API (código privado)" data-en="Next.js · Claude API (private code)">Next.js · Claude API (código privado)</p>
+            <p class="enlaces"><a href="https://best-cv-neon.vercel.app"><span data-es="Abrir la web" data-en="Open the site">Abrir la web</span> <span class="fl" aria-hidden="true">↗</span></a> <a href="/apps/#cv"><span data-es="Demo en Apps" data-en="Demo in Apps">Demo en Apps</span> <span class="fl fr" aria-hidden="true">→</span></a></p>
+          </li>
+          <li class="ficha" data-revela>
+            <h3>git-team-insights</h3>
+            <p class="ficha-desc" data-es="Ranking de calidad del código por desarrollador con git: bugs rastreados con SZZ y calidad del código propio." data-en="Code-quality ranking per developer using git: bugs traced with SZZ and quality of one's own code.">Ranking de calidad del código por desarrollador con git: bugs rastreados con SZZ y calidad del código propio.</p>
+            <p class="stack">Python · git</p>
+            <p class="enlaces"><a href="https://github.com/ArturDev98/git-team-insights"><span data-es="Repositorio" data-en="Repository">Repositorio</span> <span class="fl" aria-hidden="true">↗</span></a></p>
+          </li>
+          <li class="ficha" data-revela>
+            <h3>ci-image-notifier</h3>
+            <p class="ficha-desc" data-es="Bot que avisa en Google Chat o Slack qué imágenes Docker publicó cada build de Jenkins." data-en="Bot that tells you in Google Chat or Slack which Docker images each Jenkins build published.">Bot que avisa en Google Chat o Slack qué imágenes Docker publicó cada build de Jenkins.</p>
+            <p class="stack">Java 21 · Spring Boot · Jenkins</p>
+            <p class="enlaces"><a href="https://github.com/ArturDev98/ci-image-notifier"><span data-es="Repositorio" data-en="Repository">Repositorio</span> <span class="fl" aria-hidden="true">↗</span></a></p>
+          </li>
+          <li class="ficha" data-revela>
+            <h3>elastic-explorer</h3>
+            <p class="ficha-desc" data-es="Consulta de solo lectura de Elasticsearch por ambiente, con mappings en árbol y usuarios por cluster." data-en="Read-only Elasticsearch queries per environment, with mappings as a tree and users per cluster.">Consulta de solo lectura de Elasticsearch por ambiente, con mappings en árbol y usuarios por cluster.</p>
+            <p class="stack">Spring Boot · Spring Security · Angular</p>
+            <p class="enlaces"><a href="https://github.com/ArturDev98/elastic-explorer"><span data-es="Repositorio" data-en="Repository">Repositorio</span> <span class="fl" aria-hidden="true">↗</span></a></p>
+          </li>
+          <li class="ficha" data-revela>
+            <h3>merged_app</h3>
+            <p class="ficha-desc" data-es="Merged: actividad de GitLab, merge requests y revisiones pendientes en el móvil." data-en="Merged: GitLab activity, merge requests and pending reviews on your phone.">Merged: actividad de GitLab, merge requests y revisiones pendientes en el móvil.</p>
+            <p class="stack">Flutter · OAuth (PKCE) · CI</p>
+            <p class="enlaces"><a href="https://github.com/ArturDev98/merged_app"><span data-es="Repositorio" data-en="Repository">Repositorio</span> <span class="fl" aria-hidden="true">↗</span></a></p>
+          </li>
+          <li class="ficha" data-revela>
+            <h3>wash-app-demo</h3>
+            <p class="ficha-desc" data-es="Demo navegable de un mapa de lavaderos con aviso por WhatsApp (código privado)." data-en="Browsable demo of a car-wash map with WhatsApp notifications (private code).">Demo navegable de un mapa de lavaderos con aviso por WhatsApp (código privado).</p>
+            <p class="stack">React · Leaflet</p>
+            <p class="enlaces"><a href="https://arturdev98.github.io/wash-app-demo/"><span data-es="Abrir la demo" data-en="Open the demo">Abrir la demo</span> <span class="fl" aria-hidden="true">↗</span></a></p>
+          </li>
+        </ul>
+      </section>
+
+      <section id="herramientas" class="suite" aria-labelledby="h-herr">
+        <p class="etq" data-revela><span class="etq-n">05</span> <span data-es="Herramientas" data-en="Tools">Herramientas</span></p>
+        <h2 id="h-herr" data-revela data-es="Con lo que trabajo." data-en="What I work with.">Con lo que trabajo.</h2>
+        <div class="grupos">
+          <div class="grupo" data-revela>
+            <h3 data-es="Automatización" data-en="Test automation">Automatización</h3>
+            <ul class="chips"><li>Playwright</li><li>Selenium</li><li>Katalon Studio</li><li>Cucumber</li></ul>
+          </div>
+          <div class="grupo" data-revela>
+            <h3 data-es="API, carga y seguridad" data-en="API, load and security">API, carga y seguridad</h3>
+            <ul class="chips"><li>Postman</li><li>SOAP UI</li><li>JMeter</li><li>LoadRunner</li><li>OWASP ZAP</li><li>Nessus</li></ul>
+          </div>
+          <div class="grupo" data-revela>
+            <h3 data-es="Código" data-en="Code">Código</h3>
+            <ul class="chips"><li>Java 11 · Spring Boot</li><li>TypeScript</li><li>Angular</li><li>Ionic · Capacitor</li><li>Python</li><li>SQL Server</li><li>Elasticsearch</li></ul>
+          </div>
+          <div class="grupo" data-revela>
+            <h3>CI/CD</h3>
+            <ul class="chips"><li>Jenkins</li><li>GitLab CI</li><li>GitHub Actions</li><li>Docker</li><li>Git</li></ul>
+          </div>
+          <div class="grupo" data-revela>
+            <h3 data-es="IA aplicada" data-en="Applied AI">IA aplicada</h3>
+            <ul class="chips"><li data-es="Claude Code (agentes, skills, MCP)" data-en="Claude Code (agents, skills, MCP)">Claude Code (agentes, skills, MCP)</li><li>Claude API</li></ul>
+          </div>
+          <div class="grupo" data-revela>
+            <h3 data-es="Gestión" data-en="Tracking">Gestión</h3>
+            <ul class="chips"><li>Jira</li><li>Azure DevOps</li><li>Mantis</li><li>SysAid</li><li>Taiga</li><li>Scrum</li></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="contacto" class="suite suite-contacto" aria-labelledby="h-cont">
+        <p class="etq" data-revela><span class="etq-n">06</span> <span data-es="Contacto" data-en="Contact">Contacto</span></p>
+        <h2 id="h-cont" data-revela class="grande" data-es="¿Buscas QA Automation o SDET?" data-en="Hiring for QA Automation or SDET?">¿Buscas QA Automation o SDET?</h2>
+        <p class="disp-linea" data-es="Busco un rol de QA Automation / SDET en Bucaramanga, híbrido o remoto. Disponible de inmediato." data-en="Looking for a QA Automation / SDET role, remote or hybrid (based in Bucaramanga, Colombia). Available immediately.">Busco un rol de QA Automation / SDET en Bucaramanga, híbrido o remoto. Disponible de inmediato.</p>
+        <div class="acciones">
+          <a class="boton boton-fuerte" href="mailto:testpbr9@gmail.com" data-es="Escríbeme" data-en="Email me">Escríbeme</a>
+          <a class="boton" href="https://www.linkedin.com/in/arturo-isaza-qa">LinkedIn</a>
+          <a class="boton" href="https://github.com/arturdev98">GitHub</a>
+          <a class="boton" href="/cv/">CV</a>
+        </div>
+      </section>
+
+    </div>
+  </div>
 </main>
 
-<footer class="pie wrap">
-  <p data-es="Ninguna está afiliada a Instagram, WhatsApp, Meta, Google ni Anthropic." data-en="None of them is affiliated with Instagram, WhatsApp, Meta, Google or Anthropic.">Ninguna está afiliada a Instagram, WhatsApp, Meta, Google ni Anthropic.</p>
-  <p>github.com/arturdev98</p>
+<a class="arriba" href="#inicio" aria-label="Volver al inicio" data-aria-es="Volver al inicio" data-aria-en="Back to top"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M9 15V3M4 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+
+<footer class="pie">
+  <p class="pie-linea"><span data-es="arturdev98 · sin analítica" data-en="arturdev98 · no analytics">arturdev98 · sin analítica</span> · <a href="/apps/">Apps</a></p>
 </footer>
 
-<script>
-  // Antes de pintar: si main.js cambiaba el idioma al llegar, la portada saltaba (CLS en PageSpeed, que mide en inglés).
-  if ((navigator.language || 'es').slice(0, 2) !== 'es') {
-    document.documentElement.lang = 'en';
-    document.querySelectorAll('[data-en]').forEach(function (n) { n.textContent = n.getAttribute('data-en'); });
-    document.getElementById('b-es').classList.remove('on'); document.getElementById('b-es').setAttribute('aria-pressed', 'false');
-    document.getElementById('b-en').classList.add('on'); document.getElementById('b-en').setAttribute('aria-pressed', 'true');
-  }
-</script>
-<script src="vendor/gsap.min.js" defer></script>
-<script src="vendor/ScrollTrigger.min.js" defer></script>
-<script type="module" src="assets/main.js"></script>
 </body>
 </html>

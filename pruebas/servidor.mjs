@@ -15,6 +15,11 @@ const TIPOS = {
   '.png': 'image/png',
   '.webp': 'image/webp',
   '.woff2': 'font/woff2',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
+  '.gif': 'image/gif',
+  '.jpg': 'image/jpeg',
+  '.ico': 'image/x-icon',
 };
 
 createServer(async (req, res) => {

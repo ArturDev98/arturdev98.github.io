@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Imagen para compartir</title>
+<!-- Plantilla de og.png: la captura generar-og.mjs a 2x. Mismos tonos y letras que la portada. -->
+<style>
+  @font-face { font-family: 'Archivo'; font-weight: 800; src: url('../fonts/archivo-latin-800-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Archivo'; font-weight: 700; src: url('../fonts/archivo-latin-700-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 500; src: url('../fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 400; src: url('../fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2'); }
+
+  :root { --ground: #0E161C; --ink: #E8EFF3; --ink-soft: #B9CAD4; --muted: #8A9EAA; --cian: #4FC7D1; --verde: #6FBE8C; --ambar: #E9B35A; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  .og {
+    position: relative; width: 1200px; height: 627px; overflow: hidden;
+    background: var(--ground); color: var(--ink); font-family: 'Archivo', sans-serif;
+  }
+  .mancha { position: absolute; border-radius: 50%; background: radial-gradient(closest-side, var(--c), transparent); }
+  .m1 { --c: var(--cian); width: 820px; height: 820px; left: 560px; top: -320px; opacity: 0.3; }
+  .m2 { --c: var(--verde); width: 700px; height: 700px; left: 820px; top: 180px; opacity: 0.28; }
+  .m3 { --c: var(--ambar); width: 560px; height: 560px; left: 430px; top: 330px; opacity: 0.2; }
+
+  .escena { position: absolute; inset: 0; }
+  .frag {
+    position: absolute; display: inline-flex; align-items: center; gap: 12px;
+    height: 48px; padding: 0 20px 0 18px; border-radius: 999px; white-space: nowrap;
+    background: rgba(19, 30, 37, 0.94); border: 1px solid rgba(232, 239, 243, 0.12);
+    font-family: 'JetBrains Mono', monospace; font-size: 19px; font-weight: 500;
+  }
+  .frag::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--t); }
+  .borrosa { filter: blur(6px); opacity: 0.75; }
+  /* La lupa: dentro todo se lee; el aro deja claro que el desenfoque de fuera es a propósito. */
+  .nitida {
+    -webkit-mask-image: radial-gradient(circle 168px at 920px 262px, #000 97%, transparent 100%);
+    mask-image: radial-gradient(circle 168px at 920px 262px, #000 97%, transparent 100%);
+  }
+  .aro {
+    position: absolute; left: 752px; top: 94px; width: 336px; height: 336px; border-radius: 50%;
+    border: 2px solid rgba(232, 239, 243, 0.55);
+    box-shadow: 0 0 0 7px rgba(232, 239, 243, 0.06), inset 0 0 40px rgba(79, 199, 209, 0.12);
+  }
+  .mango {
+    position: absolute; left: 1030px; top: 392px; width: 92px; height: 14px; border-radius: 7px;
+    background: rgba(232, 239, 243, 0.55); transform: rotate(45deg); transform-origin: left center;
+  }
+  .velo { position: absolute; inset: 0; background: linear-gradient(90deg, var(--ground) 0%, rgba(14, 22, 28, 0.85) 40%, transparent 62%); }
+
+  h1 {
+    position: absolute; left: 74px; top: 112px; width: 660px; margin: 0;
+    font-size: 78px; font-weight: 800; line-height: 1.02; letter-spacing: -0.025em;
+  }
+  .productos { position: absolute; left: 74px; bottom: 70px; display: flex; gap: 34px; font-size: 24px; font-weight: 700; }
+  .productos span { display: inline-flex; align-items: center; gap: 12px; }
+  .productos span::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--t); }
+  .url { position: absolute; right: 64px; bottom: 74px; font-family: 'JetBrains Mono', monospace; font-size: 19px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="og">
+  <span class="mancha m1"></span><span class="mancha m2"></span><span class="mancha m3"></span>
+  <div class="escena borrosa"></div>
+  <div class="escena nitida"></div>
+  <span class="aro"></span><span class="mango"></span>
+  <div class="velo"></div>
+  <h1>Herramientas pequeñas que no te piden nada</h1>
+  <p class="productos">
+    <span style="--t: var(--cian)">FollowApp</span>
+    <span style="--t: var(--verde)">Chat Privacy Shield</span>
+    <span style="--t: var(--ambar)">Best CV</span>
+  </p>
+  <p class="url">arturdev98.github.io</p>
+</div>
+<script>
+  // Mismos fragmentos que la portada (assets/escena.js), colocados para esta composición.
+  const FRAGS = [
+    [788, 160, 'var(--cian)', '@lau.mtz te dejó de seguir'],
+    [840, 238, 'var(--verde)', 'Mamá: ¿ya llegaste?'],
+    [766, 316, 'var(--ambar)', 'Reduje en 66 % el cierre mensual'],
+    [970, 60, 'var(--ambar)', '¿Cuánto bajó el tiempo?'],
+    [910, 452, 'var(--verde)', '3 no leídos'],
+    [680, 470, 'var(--cian)', 'cuenta suspendida, no se fue'],
+  ];
+  for (const capa of document.querySelectorAll('.escena'))
+    for (const [x, y, t, texto] of FRAGS) {
+      const el = document.createElement('span');
+      el.className = 'frag';
+      el.style.cssText = `left:${x}px;top:${y}px;--t:${t}`;
+      el.textContent = texto;
+      capa.append(el);
+    }
+</script>
+</body>
+</html>

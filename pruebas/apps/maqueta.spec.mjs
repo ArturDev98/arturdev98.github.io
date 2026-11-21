@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('tres apps con su CTA exacto', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   await expect(page.locator('#followapp a.cta')).toHaveAttribute('href', 'https://chromewebstore.google.com/detail/nffhilcgedjjoednagidnimjnembkdho');
   await expect(page.locator('#shield a.cta')).toHaveAttribute('href', 'https://chromewebstore.google.com/detail/chat-privacy-shield/gillcdhclnchpkbifcnipfckmapodjpm');
   await expect(page.locator('#cv a.cta')).toHaveAttribute('href', 'https://best-cv-neon.vercel.app');
@@ -9,7 +9,7 @@ test('tres apps con su CTA exacto', async ({ page }) => {
 });
 
 test('cada app tiene su demo y tres puntos', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   for (const id of ['followapp', 'shield', 'cv']) {
     await expect(page.locator(`#${id} .demo[data-demo="${id}"]`)).toHaveCount(1);
     await expect(page.locator(`#${id} .app-texto li`)).toHaveCount(3);
@@ -17,14 +17,21 @@ test('cada app tiene su demo y tres puntos', async ({ page }) => {
 });
 
 test('pie sin CV ni proyecto de QA', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   await expect(page.locator('footer a[href*="/cv"], footer a[href*="ai-automatization"]')).toHaveCount(0);
   await expect(page.locator('footer')).toContainText('github.com/arturdev98');
 });
 
+test('el enlace del pie lleva a la raíz', async ({ page }) => {
+  await page.goto('/apps/');
+  await page.locator('footer a[href="/"]').click();
+  await expect(page).toHaveURL(/127\.0\.0\.1:4173\/$/);
+  await expect(page.locator('h1')).toBeVisible();
+});
+
 test('sin scroll horizontal en 390 px, ES y EN', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
+  await page.goto('/apps/');
   for (const l of ['ES', 'EN']) {
     await page.getByRole('button', { name: l, exact: true }).click();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
