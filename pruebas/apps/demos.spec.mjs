@@ -8,7 +8,7 @@ const avanzar = async (page, demo, p) => {
 };
 
 test('FollowApp distingue a quien se fue de una cuenta suspendida', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   await avanzar(page, 'followapp', 0.5);
   await expect(page.locator('[data-demo=followapp] .aviso')).toContainText('te dejó de seguir');
   await expect(page.locator('[data-demo=followapp] .aviso')).toBeVisible();
@@ -17,7 +17,7 @@ test('FollowApp distingue a quien se fue de una cuenta suspendida', async ({ pag
 });
 
 test('FollowApp vuelve atrás si el scroll retrocede', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   await avanzar(page, 'followapp', 1);
   await avanzar(page, 'followapp', 0.5);
   await expect(page.locator('[data-demo=followapp] .aviso')).toContainText('te dejó de seguir');
@@ -25,7 +25,7 @@ test('FollowApp vuelve atrás si el scroll retrocede', async ({ page }) => {
 });
 
 test('la intensidad cambia el desenfoque y los no leídos siguen nítidos', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   // fill() no admite input range: se fija el valor como lo haría el usuario y se avisa.
   await page.locator('#intensidad').evaluate((el) => { el.value = '12'; el.dispatchEvent(new Event('input', { bubbles: true })); });
   const d = page.locator('[data-demo=shield]');
@@ -36,7 +36,7 @@ test('la intensidad cambia el desenfoque y los no leídos siguen nítidos', asyn
 
 test('el cursor revela el chat y al irse se vuelve a tapar', async ({ page }, info) => {
   test.skip(info.project.name !== 'escritorio');
-  await page.goto('/');
+  await page.goto('/apps/');
   const fila = page.locator('[data-demo=shield] .chat').nth(1);
   await fila.hover();
   await expect(fila.locator('.chat-texto')).toHaveCSS('filter', 'none');
@@ -46,14 +46,14 @@ test('el cursor revela el chat y al irse se vuelve a tapar', async ({ page }, in
 
 test('tocar con el dedo revela el chat', async ({ page }, info) => {
   test.skip(info.project.name !== 'movil');
-  await page.goto('/');
+  await page.goto('/apps/');
   const fila = page.locator('[data-demo=shield] .chat').nth(1);
   await fila.tap();
   await expect(fila.locator('.chat-texto')).toHaveCSS('filter', 'none');
 });
 
 test('la demo de Shield revela una fila a mitad de camino', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   await avanzar(page, 'shield', 0.3);
   await expect(page.locator('[data-demo=shield] .chat.revelada-demo')).toHaveCount(1);
   await avanzar(page, 'shield', 1);
@@ -61,7 +61,7 @@ test('la demo de Shield revela una fila a mitad de camino', async ({ page }) => 
 });
 
 test('Best CV pregunta antes de reescribir', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   const d = page.locator('[data-demo=cv]');
   await avanzar(page, 'cv', 0.1);
   await expect(d.locator('.logro-antes')).toContainText('Encargado de mejorar procesos');
@@ -77,14 +77,14 @@ test('Best CV pregunta antes de reescribir', async ({ page }) => {
 });
 
 test('Best CV reescribe en inglés si se cambia de idioma al final', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   await avanzar(page, 'cv', 1);
   await page.getByRole('button', { name: 'EN', exact: true }).click();
   await expect(page.locator('[data-demo=cv] .logro')).toContainText('Cut month-end close');
 });
 
 test('la demo cambia de idioma a medias', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/apps/');
   await avanzar(page, 'followapp', 0.5);
   await page.getByRole('button', { name: 'EN', exact: true }).click();
   await expect(page.locator('[data-demo=followapp] .aviso')).toContainText('unfollowed you');

@@ -8,7 +8,7 @@ test.describe('portátil bajo en inglés', () => {
     test(`a ${ancho}×${alto} el CTA se ve mientras la sección está fijada`, async ({ page }, info) => {
       test.skip(info.project.name !== 'escritorio');
       await page.setViewportSize({ width: ancho, height: alto });
-      await page.goto('/');
+      await page.goto('/apps/');
       await page.waitForLoadState('networkidle');
       for (const id of ['followapp', 'shield', 'cv']) {
         const fijada = await page.locator(`#${id}`).evaluate((el) => el.parentElement.classList.contains('pin-spacer'));
@@ -26,7 +26,7 @@ test('sin GSAP la portada y las demos quedan legibles', async ({ page }) => {
   const errores = [];
   page.on('pageerror', (e) => errores.push(e.message));
   await page.route('**/vendor/gsap.min.js', (r) => r.abort());
-  await page.goto('/');
+  await page.goto('/apps/');
   await page.waitForLoadState('networkidle');
   expect(errores).toEqual([]);
   expect(await page.locator('.escena.nitida .frag').count()).toBeGreaterThan(0);
@@ -42,7 +42,7 @@ test('la portada CSS deja de animarse fuera de pantalla', async ({ page }, info)
   test.skip(info.project.name !== 'movil');
   const corriendo = () => page.evaluate(() => document.getAnimations()
     .filter((a) => a.playState === 'running' && a.effect?.target?.closest?.('.portada-css')).length);
-  await page.goto('/');
+  await page.goto('/apps/');
   await expect.poll(corriendo).toBeGreaterThan(0);
   await page.locator('footer').scrollIntoViewIfNeeded();
   await expect.poll(corriendo).toBe(0);

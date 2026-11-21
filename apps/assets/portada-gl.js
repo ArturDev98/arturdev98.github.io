@@ -1,4 +1,4 @@
-import * as THREE from '../vendor/three.module.min.js';
+import * as THREE from '../../vendor/three.module.min.js';
 import { FRAGMENTOS, MANCHAS, TONOS, idiomaActual } from './escena.js';
 
 const RADIO = 120;
